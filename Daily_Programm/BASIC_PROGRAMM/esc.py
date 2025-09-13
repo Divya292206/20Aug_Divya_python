@@ -1,0 +1,11 @@
+#escape sequences in python
+print("hello \npython") 
+print("hello \tpython")
+print("hello \'python\'")
+print("hello \"python\"")
+print("hello \\python")
+print("hello \bpython")
+print("hello python \rpython is language")
+print("hello \fpython")
+print("hello \vpython")
+print("hello \0python")
