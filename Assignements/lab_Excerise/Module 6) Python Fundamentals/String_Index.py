@@ -1,0 +1,5 @@
+#Practical Example: 4) Write a Python program to access the first character of a string using index value.
+
+msg = "Python programming"
+
+print(msg[0])

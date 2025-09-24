@@ -1,3 +1,4 @@
+#type casting
 a=65
 b=7.23
 c="Divya"

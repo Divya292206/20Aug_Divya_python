@@ -1,5 +1,4 @@
 for i in range(1,6):
     for j in range(i):
-        print(i+1, end="")
-    print("")
-
+        print("*", end="")
+    print("") 
