@@ -1,0 +1,9 @@
+Invoice ID: 1
+Patient: Jiya
+Created: 2025-11-11T14:08:04.941431
+
+Items:
+
+Subtotal: 800.0
+Tax: 16.0
+Total: 816.0
