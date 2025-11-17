@@ -1,14 +1,18 @@
 # Write a Python program to create a class and access the properties of the class using an object
 
-class Person:
-    def __init__(self, name, age):
-        self.name = name
-        self.age = age
+class Member:
 
-    def display_info(self):
-        print(f"Name: {self.name}, Age: {self.age}")
+    def student(self,id,name):
+        self.id = 1
+        self.name = 'Divya'
+
+    def display():
+        print("id is :",id)
+        print("Name is :",name)
+
+M1 = Member()
+
+M1.
 
 
-# Creating an object of the Person class
-person1 = Person("Alice", 30)   
-person1.display_info()  # Accessing the method to display properties
+
