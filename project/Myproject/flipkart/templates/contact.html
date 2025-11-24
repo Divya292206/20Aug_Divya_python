@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Welcome contact page</title>
+    <style>
+        body{
+            background-color: rgb(196, 171, 219);
+        }
+        h1{
+            color: brown;
+            font-size: larger;
+            font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+            font-style: italic;
+            text-align: center;
+        }
+    </style>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js" integrity="sha384-FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYwJrWVcXK/BmnVDxM+D2scQbITxI" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="style.css">
+
+  </head>
+<body>
+
+    <!-- Navbar Start -->
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark shadow-sm py-3">
+  <div class="container">
+
+    <!-- Logo -->
+    <a class="navbar-brand fw-bold" href="#" style="font-size: 26px; letter-spacing: 1px;">
+      BikeHub
+    </a>
+
+    <!-- Menu Items -->
+    <div class="collapse navbar-collapse" id="navbarNav">
+      <ul class="navbar-nav mx-auto">
+        <li class="nav-item px-2"><a class="nav-link text-white" href="/">Home</a></li>
+        <li class="nav-item px-2"><a class="nav-link text-white" href="/about">About</a></li>
+        <li class="nav-item px-2"><a class="nav-link text-white" href="/contact">Contact</a></li>
+       </ul>
+
+      <!-- Buttons -->
+      <div class="d-flex">
+        <a href="signup.html" class="btn btn-outline-light rounded-pill px-4 mx-2">Signup</a>
+        <a href="login.html" class="btn btn-light text-dark rounded-pill px-4">Login</a>
+      </div>
+    </div>
+
+  </div>
+</nav>
+<!-- Navbar End -->
+
+<!-- contact form start -->
+
+<!-- form start -->
+
+<!-- Contact Form Start -->
+
+<div class="container mt-5" style="max-width: 600px;">
+  <div class="card shadow-lg p-4 border-0 rounded-3">
+    <br><h2 class="text-center mb-3">Contact Us</h2><br>
+    
+<form method="POST">
+{% csrf_token %}
+
+      <div class="form-group mb-3">
+        <label for="name">Full Name</label>
+        <input type="text" name="name" class="form-control" id="name" placeholder="Enter your name">
+      </div><br>
+
+      <div class="form-group mb-3">
+        <label for="exampleInputEmail1">Email Address</label>
+        <input type="email" name="email" class="form-control" id="exampleInputEmail1" placeholder="Enter your email">
+      </div><br>
+
+      <div class="form-group mb-3">
+        <label for="message">Message</label>
+        <textarea class="form-control" name="msg" id="message" rows="4" placeholder="Write your message here"></textarea>
+      </div>
+
+      <button type="submit" class="btn btn-primary w-100 py-2">Submit</button>
+
+    </form>
+
+  </div>
+</div>
+
+<!-- Contact Form End -->
+
+
+
+
+<!-- form end -->
+
+<!-- contact form end -->
+
+<!-- footer start -->
+
+<footer class="bg-dark text-white text-center py-3 mt-4">
+    <p class="mb-0">🚲 Quality Bikes. Quality Rides.</p>
+</footer>
+
+<!-- footer end -->

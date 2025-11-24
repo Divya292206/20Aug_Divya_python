@@ -1,9 +1,0 @@
-git init
-git add README.md
-git commit -m "first commit"
-git branch -M main
-git remote add origin https://github.com/Divya292206/20Aug_Divya_python.git
-git push -u origin main
-
-
-https://github.com/Divya292206/20Aug_Divya_python.git
