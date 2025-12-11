@@ -1,4 +1,5 @@
 from django.shortcuts import render
+from .forms import *
 
 # Create your views here.
 
@@ -12,6 +13,13 @@ def booking(request):
     return render(request,'booking.html')
 
 def contact(request):
+    if request.method == 'POST':
+        con = contact_form(request.POST)
+        if con.is_valid():
+            con.save()
+            print("inserted record")
+        else:
+            print(con.errors)
     return render(request,'contact.html')
 
 def menu(request):

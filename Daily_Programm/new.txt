@@ -1,0 +1,6 @@
+Anjali 20 80
+name =anjali age =20 mark =90
+name =Divya age =18 mark =80
+name =Anjali age =20 mark =90
+name =bansi age =10 mark =80
+-----------------------------

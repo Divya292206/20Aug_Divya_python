@@ -1,0 +1,58 @@
+#collect userinput
+# created_at(current date - time)
+#name
+#city
+#country
+
+
+import datetime
+import json
+import os
+import uuid
+
+def collect_user_input():
+    name = input("Enter your name: ")
+    city = input("Enter your city: ")
+    country = input("Enter your country: ")
+    return name, city, country
+
+
+def get_current_datetime():
+    return datetime.datetime.now().isoformat()
+
+def generate_unique_id():
+    return str(uuid.uuid4())
+
+def save_to_json(data, filename='user_data.json'):
+    if os.path.exists(filename):
+        with open(filename, 'r') as file:
+            existing_data = json.load(file)
+    else:
+        existing_data = []
+
+    existing_data.append(data)
+
+    with open(filename, 'w') as file:
+        json.dump(existing_data, file, indent=4)
+
+def main():
+    name, city, country = collect_user_input()
+    created_at = get_current_datetime()
+    user_id = generate_unique_id()
+
+    user_data = {
+        "id": user_id,
+        "name": name,
+        "city": city,
+        "country": country,
+        "created_at": created_at
+    }
+
+    save_to_json(user_data)
+    print("User data saved successfully.")
+
+if __name__ == "__main__":
+    main()
+
+# print(calendar.month(2024,6))
+# print(calendar.month(2024,6))
