@@ -1,112 +1,196 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="shortcut icon" href="/static/img/image.png" type="image/x-icon">
-
-    <title>NotesApp | Notes</title>
-
-    <!-- Bootstrap CSS -->
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet">
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="shortcut icon" href="/static/img/image.png" type="image/x-icon">
+  <title>NotesApp | Notes</title>
+    <link rel="shortcut icon" href="https://cdn-icons-gif.flaticon.com/17518/17518063.gif" type="image/x-icon">
 
 
-    <style>
-        body {
-            background: linear-gradient(135deg, #c4abdb, #f0d9ff);
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-        }
-
-    
-        /* Navbar */
-        .navbar-brand {
-            font-size: 28px;
-            letter-spacing: 2px;
-            font-weight: 700;
-        }
-    </style>
+  <!-- Tailwind CSS -->
+  <script src="https://cdn.tailwindcss.com"></script>
 </head>
-<body>
 
-<!-- Navbar Start -->
-<nav class="navbar navbar-expand-lg navbar-dark bg-dark shadow-sm py-3">
-    <div class="container">
-        <a class="navbar-brand" href="/"> <img src="/static/img/image.png" alt="NotesApp Logo" style="width:40px; height:40px; object-fit:contain;">
-    </a>
-        <a class="navbar-brand" href="#">NotesApp</a>
-        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
-            <span class="navbar-toggler-icon"></span>
+<body class="bg-gradient-to-br from-purple-600 via-pink-400 to-blue-500 min-h-screen">
+
+  <!-- Navbar -->
+  <nav class="bg-gray-900/80 backdrop-blur-lg shadow-lg">
+    <div class="max-w-7xl mx-auto px-6 py-4 flex justify-between items-center">
+      
+      <div class="flex items-center gap-3">
+      <img src="https://cdn-icons-gif.flaticon.com/17518/17518063.gif" class="w-10 h-10">
+        <h1 class="text-white text-2xl font-bold tracking-wide">NotesApp</h1>
+      </div>
+
+      <ul class="hidden md:flex gap-6 text-white font-medium">
+        <li><a href="/" class="hover:text-yellow-300">Home</a></li>
+        <li><a href="/notes" class="text-yellow-300 font-semibold">Notes</a></li>
+        {% if user %}
+        <li><a href="/profile" class="hover:text-yellow-300">Profile</a></li>
+        {% endif %}
+        <li><a href="/about" class="hover:text-yellow-300">About</a></li>
+        <li><a href="/contact" class="hover:text-yellow-300">Contact</a></li>
+      </ul>
+
+      {% if user is none %}
+      <div class="hidden md:flex gap-3">
+        <a href="/signup" class="px-4 py-2 bg-transparent border border-white rounded-xl text-white hover:bg-white hover:text-black">
+          Signup
+        </a>
+        <a href="/login" class="px-4 py-2 bg-white rounded-xl text-black font-semibold hover:bg-yellow-300">
+          Login
+        </a>
+      </div>
+
+      {% else %}
+      <!-- Clickable Profile Dropdown -->
+      <div class="relative">
+        <button id="dropdownBtn" 
+            class="px-4 py-2 bg-white rounded-xl font-semibold flex items-center gap-2">
+            {{ user }}
+            <span>▼</span>
         </button>
-        <div class="collapse navbar-collapse" id="navbarNav">
-            <ul class="navbar-nav mx-auto">
-                <li class="nav-item px-2"><a class="nav-link text-white" href="/">Home</a></li>
-                <li class="nav-item px-2"><a class="nav-link text-white active" href="#">Notes</a></li>
-                {% if user %}
-                <li class="nav-item px-2"><a class="nav-link text-white" href="/profile">Profile</a></li>
-                {% endif %}
-                <li class="nav-item px-2"><a class="nav-link text-white" href="/about">About</a></li>
-                <li class="nav-item px-2"><a class="nav-link text-white" href="/contact">Contact</a></li>
-            </ul>
-            
-            <div class="d-flex">
-                <a href="/signup" class="btn btn-outline-light rounded-pill px-4 mx-2">Signup</a>
-                <a href="/login" class="btn btn-light text-dark rounded-pill px-4">Login</a>
-            </div>
-        </div>
+
+        <ul id="dropdownMenu" 
+            class="hidden absolute right-0 bg-white shadow-xl rounded-xl mt-2 w-40 z-50">
+            <li><a class="block px-4 py-2 hover:bg-gray-100" href="/profile">Update Profile</a></li>
+            <li><a class="block px-4 py-2 hover:bg-gray-100" href="/userlogout">Logout</a></li>
+        </ul>
+      </div>
+      {% endif %}
+
     </div>
-</nav>
+  </nav>
 
+  {% if user is none %}
 
-<!-- Navbar End -->
+  <!-- Access Denied -->
+  <section class="flex items-center justify-center px-6 py-24">
+  <div class="bg-white rounded-3xl shadow-2xl p-12 max-w-xl w-full text-center">
 
-<!-- notes form start -->
+    <!-- ICON -->
+    <div class="text-6xl mb-6">🚫</div>
 
-<div class="container mt-5">
-    <div class="card shadow p-4">
-        <h3 class="mb-4 text-center">Add Notes</h3>
+    <h2 class="text-3xl font-extrabold text-gray-800 mb-4">
+      Access Denied
+    </h2>
 
-        <form method="POST" enctype="multipart/form-data">
-            {% csrf_token %}
-            <!-- Notes Title -->
-            <div class="mb-3">
-                <label class="form-label">Notes Title</label>
-                <input type="text" class="form-control" name="title" placeholder="Enter note title" required>
-            </div>
+    <p class="text-gray-600 mb-8 leading-relaxed">
+      Sorry, you don’t have permission to access these notes.
+      This page is restricted and available only to authorized users.
+    </p>
 
-            <!-- Dropdown -->
-            <div class="mb-3">
-                <label class="form-label">Category</label>
-                <select class="form-select" name="category" required>
-                    <option selected disabled>Select category</option>
-                    <option value="Work">Work</option>
-                    <option value="Study">Study</option>
-                    <option value="Personal">Personal</option>
-                    <option value="Important">Important</option>
-                </select>
-            </div>
+    <!-- ACTION BUTTONS -->
+    <div class="flex flex-col sm:flex-row justify-center gap-4">
+      <a href="/login"
+         class="px-6 py-3 rounded-xl bg-gradient-to-r from-purple-600 to-pink-500
+                text-white font-semibold shadow hover:scale-105 transition">
+        Login
+      </a>
 
-            <!-- File Upload -->
-            <div class="mb-3">
-                <label class="form-label">Upload File</label>
-                <input type="file" class="form-control" name="file">
-            </div>
-
-            <!-- Textarea -->
-            <div class="mb-3">
-                <label class="form-label">Description</label>
-                <textarea class="form-control" name="desc" rows="4" placeholder="Write your notes..." required></textarea>
-            </div>
-
-            <!-- Submit -->
-            <button type="submit" class="btn btn-primary w-100">Submit</button>
-        </form>
+      <a href="/"
+         class="px-6 py-3 rounded-xl border border-gray-300
+                text-gray-700 font-semibold hover:bg-gray-100 transition">
+        Go to Home
+      </a>
     </div>
-</div>
 
-<!-- notes form end -->
+    <!-- NOTE -->
+    <p class="mt-8 text-sm text-gray-500">
+      If you believe this is a mistake, please contact the administrator.
+    </p>
+  </div>
+</section>
+  <br><br><br><br><br>
 
-<!-- Bootstrap JS -->
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"></script>
+  {% else %}
+
+  <!-- Notes Form -->
+  <div class="max-w-3xl mx-auto mt-12 bg-white/20 backdrop-blur-lg border border-white/30 shadow-2xl p-8 rounded-2xl">
+
+    <h2 class="text-3xl text-white font-bold text-center mb-8">Add Notes</h2>
+
+    <form method="POST" enctype="multipart/form-data">
+      {% csrf_token %}
+
+      <!-- Title -->
+      <div class="relative mb-6">
+        <input type="text" name="title" placeholder=" "
+               class="peer w-full px-4 py-3 bg-white/20 text-white border rounded-lg border-white/40 
+                      focus:ring-2 focus:ring-yellow-300 outline-none">
+        <label class="absolute left-4 top-3 text-white/80 transition-all 
+                      peer-placeholder-shown:top-3 peer-placeholder-shown:text-base
+                      peer-focus:-top-3 peer-focus:text-sm peer-focus:text-yellow-300">
+          Notes Title
+        </label>
+      </div>
+
+      <!-- Category -->
+      <div class="relative mb-6">
+        <select name="cate"
+                class="peer w-full px-4 py-3 bg-white/20 text-white border rounded-lg border-white/40 
+                       focus:ring-2 focus:ring-yellow-300 outline-none">
+          <option value="" disabled selected>Select category</option>
+          <option class="text-black" value="Work">Work</option>
+          <option class="text-black" value="Study">Study</option>
+          <option class="text-black" value="Personal">Personal</option>
+          <option class="text-black" value="Important">Important</option>
+        </select>
+      </div>
+
+      <!-- File Upload -->
+      <div class="mb-6">
+        <label class="text-white/80 font-medium">Upload File</label>
+        <input type="file" name="file"
+               class="w-full mt-2 text-white bg-white/10 border border-white/30 rounded-lg p-2">
+      </div>
+
+      <!-- Description -->
+      <div class="relative mb-8">
+        <textarea name="desc" rows="4" placeholder=" "
+                  class="peer w-full px-4 py-3 bg-white/20 text-white border rounded-lg border-white/40 
+                         focus:ring-2 focus:ring-yellow-300 outline-none"></textarea>
+        <label class="absolute left-4 top-3 text-white/80 transition-all 
+                      peer-placeholder-shown:top-3 peer-placeholder-shown:text-base
+                      peer-focus:-top-3 peer-focus:text-sm peer-focus:text-yellow-300">
+          Description
+        </label>
+      </div>
+
+      <!-- Submit -->
+      <button type="submit"
+              class="w-full py-3 bg-yellow-300 text-gray-900 font-bold rounded-lg shadow-lg 
+                     hover:bg-white transition">
+        Submit
+      </button>
+
+    </form>
+  </div>
+<br><br>
+  {% endif %}
+
+  <!-- Dropdown JS -->
+  <script>
+    const btn = document.getElementById("dropdownBtn");
+    const menu = document.getElementById("dropdownMenu");
+
+    if(btn){
+      btn.addEventListener("click", () => {
+        menu.classList.toggle("hidden");
+      });
+
+      document.addEventListener("click", (e) => {
+        if (!btn.contains(e.target) && !menu.contains(e.target)) {
+          menu.classList.add("hidden");
+        }
+      });
+    }
+  </script>
+
+
+  
+
 </body>
 </html>

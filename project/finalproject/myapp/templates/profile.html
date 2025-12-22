@@ -1,142 +1,158 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="shortcut icon" href="/static/img/image.png" type="image/x-icon">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="shortcut icon" href="/static/img/image.png" type="image/x-icon">
+  <title>NotesApp | Profile</title>
+    <link rel="shortcut icon" href="https://cdn-icons-gif.flaticon.com/17518/17518063.gif" type="image/x-icon">
 
-    <title>NotesApp | Profile</title>
-
-    <!-- Bootstrap CSS -->
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet">
-
-    <style>
-        body {
-            background: linear-gradient(135deg, #c4abdb, #f0d9ff);
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-        }
-
-       
-        .navbar-brand {
-            font-size: 28px;
-            font-weight: 700;
-            letter-spacing: 2px;
-        }
-
-        .register-card {
-            max-width: 500px;
-            margin: 30px auto;
-            padding: 30px;
-            background: #fff;
-            border-radius: 15px;
-            box-shadow: 0 5px 25px rgba(0,0,0,0.1);
-        }
-
-        .btn-register {
-            background-color: #6f42c1;
-            color: white;
-            border-radius: 8px;
-        }
-
-        .btn-register:hover {
-            background-color: #59359a;
-        }
-    </style>
+  <script src="https://cdn.tailwindcss.com"></script>
 </head>
-<body>
 
-<!-- Navbar Start -->
-<nav class="navbar navbar-expand-lg navbar-dark bg-dark shadow-sm py-3">
-    <div class="container">
+<body class="bg-gradient-to-br from-purple-600 via-pink-400 to-blue-500 min-h-screen">
 
-        <!-- Logo -->
-        <a class="navbar-brand" href="/">
-            <img src="/static/img/image.png" style="width:40px; height:40px; object-fit:contain;">
-            NotesApp
+  <!-- Navbar -->
+  <nav class="bg-gray-900/80 backdrop-blur-lg shadow-lg">
+    <div class="max-w-7xl mx-auto px-6 py-4 flex justify-between items-center">
+      <div class="flex items-center gap-3">
+      <img src="https://cdn-icons-gif.flaticon.com/17518/17518063.gif" class="w-10 h-10">
+        <h1 class="text-white text-2xl font-bold tracking-wide">NotesApp</h1>
+      </div>
+
+      <ul class="hidden md:flex gap-6 text-white font-medium">
+        <li><a href="/" class="hover:text-yellow-300">Home</a></li>
+        <li><a href="/notes" class="hover:text-yellow-300">Notes</a></li>
+        <li><a href="/about" class="hover:text-yellow-300">About</a></li>
+        <li><a href="/contact" class="hover:text-yellow-300">Contact</a></li>
+      </ul>
+
+      {% if user is none %}
+      <div class="hidden md:flex gap-3">
+        <a href="/signup" class="px-4 py-2 bg-transparent border border-white rounded-xl text-white hover:bg-white hover:text-black">
+          Signup
         </a>
+        <a href="/login" class="px-4 py-2 bg-white rounded-xl text-black font-semibold hover:bg-yellow-300">
+          Login
+        </a>
+      </div>
 
-        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
-            <span class="navbar-toggler-icon"></span>
+      {% else %}
+      <div class="relative">
+        <button id="dropdownBtn" 
+            class="px-4 py-2 bg-white rounded-xl font-semibold flex items-center gap-2">
+            {{ user }}
+            <span>▼</span>
         </button>
 
-        <div class="collapse navbar-collapse" id="navbarNav">
+        <ul id="dropdownMenu" 
+            class="hidden absolute right-0 bg-white shadow-xl rounded-xl mt-2 w-40 z-50">
+            <li><a class="block px-4 py-2 hover:bg-gray-100" href="/userlogout">Logout</a></li>
+        </ul>
+      </div>
+      {% endif %}
+    </div>
+  </nav>
 
-            <!-- Navbar Menu -->
-            <ul class="navbar-nav mx-auto">
-                <li class="nav-item px-2"><a class="nav-link text-white" href="/">Home</a></li>
-                <li class="nav-item px-2"><a class="nav-link text-white" href="/notes">Notes</a></li>
-                <li class="nav-item px-2"><a class="nav-link text-white" href="/about">About</a></li>
-                <li class="nav-item px-2"><a class="nav-link text-white" href="/contact">Contact</a></li>
-            </ul>
+  <!-- Profile Form -->
+  <div class="max-w-3xl mx-auto mt-12 bg-white/20 backdrop-blur-lg border border-white/30 shadow-2xl p-8 rounded-2xl">
 
-            <!-- Right Side Buttons -->
-            {% if user is none %}
-            <div class="d-flex">
-                <a href="/signup" class="btn btn-outline-light rounded-pill px-4">Signup</a>
-                <a href="/login" class="btn btn-light text-dark rounded-pill px-4 mx-2">Login</a>
-            </div>
+    <h2 class="text-3xl text-white font-bold text-center mb-8">Update Profile</h2>
 
-            {% else %}
-            <!-- Profile Dropdown -->
-            <div class="dropdown">
-                <button class="btn btn-light text-dark rounded-pill px-4 dropdown-toggle"
-                        type="button" data-bs-toggle="dropdown">
-                    {{ user }}
-                </button>
+    <form method="POST">
+      {% csrf_token %}
 
-                <ul class="dropdown-menu dropdown-menu-end">
-                    <li><a class="dropdown-item" href="/userlogout">Logout</a></li>
-                </ul>
-            </div>
-            {% endif %}
+      <!-- Name -->
+      <div class="relative mb-6">
+        <label>
+          FullName
+        </label>
+        <input type="text" name="name" value="{{ cuser.name }}" 
+               class="peer w-full px-4 py-3 bg-white/20 text-black border rounded-lg border-white/40 focus:ring-2 focus:ring-yellow-300 outline-none my-1">
+        
+      </div>
 
+      <!-- Phone -->
+      <div class="relative mb-6">
+        <label>
+          Phone
+        </label>
+        <input type="text" name="phone" value="{{ cuser.phone }}" placeholder=" " 
+               class="peer w-full px-4 py-3 bg-white/20 text-black border rounded-lg border-white/40 focus:ring-2 focus:ring-yellow-300 outline-none my-1">
+        
+      </div>
+
+      <!-- Email -->
+      <div class="relative mb-6">
+        <label>
+          Email
+        </label>
+        <input type="email" name="email" value="{{ cuser.email }}" placeholder=" " disabled
+               class="peer w-full px-4 py-3 bg-white/20 text-black border rounded-lg border-white/40 focus:ring-2 focus:ring-yellow-300 outline-none cursor-not-allowed my-1">
+       
+      </div>
+
+      <!-- Password -->
+      <div class="relative mb-8">
+        <label>
+          Password
+        </label>
+        <input type="password" name="password" value="{{ cuser.password }}" placeholder=" " disabled
+               class="peer w-full px-4 py-3 bg-white/20 text-black border rounded-lg border-white/40 focus:ring-2 focus:ring-yellow-300 outline-none cursor-not-allowed my-1">
+        
+      </div>
+
+      <button type="submit" class="w-full py-3 bg-yellow-300 text-gray-900 font-bold rounded-lg shadow-lg hover:bg-white transition">
+        Update
+      </button>
+    </form>
+  </div>
+
+  <!-- Dropdown JS -->
+  <script>
+    const btn = document.getElementById("dropdownBtn");
+    const menu = document.getElementById("dropdownMenu");
+
+    if(btn){
+      btn.addEventListener("click", () => {
+        menu.classList.toggle("hidden");
+      });
+
+      document.addEventListener("click", (e) => {
+        if (!btn.contains(e.target) && !menu.contains(e.target)) {
+          menu.classList.add("hidden");
+        }
+      });
+    }
+  </script>
+
+  <!-- Footer -->
+  <footer class="bg-gray-900 text-white py-12">
+    <div class="max-w-7xl mx-auto px-6 grid grid-cols-1 md:grid-cols-3 gap-8">
+      <div>
+        <h3 class="font-bold text-xl mb-4">NotesApp</h3>
+        <p class="text-gray-400">Your personal space to write, organize, and manage your notes anytime, anywhere.</p>
+      </div>
+      <div>
+        <h3 class="font-bold text-xl mb-4">Quick Links</h3>
+        <ul class="space-y-2">
+          <li><a href="/" class="hover:text-yellow-300 transition">Home</a></li>
+          <li><a href="/notes" class="hover:text-yellow-300 transition">Notes</a></li>
+          <li><a href="/about" class="hover:text-yellow-300 transition">About</a></li>
+          <li><a href="/contact" class="hover:text-yellow-300 transition">Contact</a></li>
+        </ul>
+      </div>
+      <div>
+        <h3 class="font-bold text-xl mb-4">Follow Us</h3>
+        <div class="flex gap-4">
+          <a href="#" class="hover:text-yellow-300 transition">🐦 Twitter</a>
+          <a href="#" class="hover:text-yellow-300 transition">📘 Facebook</a>
+          <a href="#" class="hover:text-yellow-300 transition">📸 Instagram</a>
         </div>
+      </div>
     </div>
-</nav>
-<!-- Navbar End -->
+  </footer>
 
-
-<!-- Hero Section -->
-<section>
-    <h2 style="text-align: center; margin-top: 2rem; margin-bottom: 2rem;">Welcome to Your Profile</h2>
-</section>
-
-
-<!-- Update Profile Form -->
-<div class="container">
-    <div class="register-card">
-        <h3 class="text-center mb-1">Update Your Profile</h3>
-
-        <form method="post">
-            {% csrf_token %}
-
-            <div class="mb-3">
-                <label class="form-label">Full Name</label>
-                <input type="text" name="name" value="{{ cuser.name }}" class="form-control" placeholder="Enter your full name">
-            </div>
-
-            <div class="mb-3">
-                <label class="form-label">Email Address</label>
-                <input type="email" name="email"  disabled value="{{ cuser.email }}" class="form-control" placeholder="Enter your email">
-            </div>
-
-            <div class="mb-3">
-                <label class="form-label">Phone Number</label>
-                <input type="text" name="phone" value="{{cuser.phone}}" class="form-control" placeholder="Enter your phone number">
-            </div>
-
-            <div class="mb-3">
-                <label class="form-label">Password</label>
-                <input type="password" name="password"  disabled value="{{ cuser.password }}" class="form-control" placeholder="Create password">
-            </div>
-
-            <button type="submit" class="btn btn-register w-100 py-2">Update</button>
-        </form>
-    </div>
-</div>
-
-
-<!-- Bootstrap JS -->
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>

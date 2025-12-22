@@ -21,6 +21,15 @@ def about(request):
 def contact(request):
     user = request.session.get('email')
 
+    if request.method == "POST":
+        contactreq =ContactinfoForm(request.POST)
+        if contactreq.is_valid():
+            contactreq.save()
+            print("sucessfully saved")
+            return redirect("/")
+        else:
+            print(contactreq.errors)
+
     return render(request, 'contact.html', {'user': user})
 
 def login(request):  
@@ -45,19 +54,23 @@ def login(request):
 
 
 def notes(request):
-    user = request.session.get('email')
-    unm = Noteinfo.objects.get(email=user)
-    if request.method == "POST":
-        newreq = notesdataform(request.POST, request.FILES)
-        if newreq.is_valid():
-            x=newreq.save(commit=False)
-            x.user=unm
-            x.status='pending'
-            x.save()
-            print("sucessfully saved")
-            return redirect("/")
-        else:
-            print(newreq.errors)
+    try:
+        user = request.session.get('email')
+        unm = Noteinfo.objects.get(email=user)
+        if request.method == "POST":
+            newreq = notesdataform(request.POST, request.FILES)
+            if newreq.is_valid():
+                x=newreq.save(commit=False)
+                x.user=unm
+                x.status='pending'
+                x.save()
+                print("sucessfully saved")
+                return redirect("/")
+            else:
+                print(newreq.errors)
+
+    except:
+        print("Error in notes view")
 
     return render(request, 'notes.html', {'user': user})
 
@@ -114,5 +127,5 @@ def otp_varify(request):
 
 def userlogout(request):
     logout(request)
-    return redirect('login')
+    return redirect('/')
 

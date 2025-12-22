@@ -5,117 +5,90 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link rel="shortcut icon" href="/static/img/image.png" type="image/x-icon">
   <title>NotesApp | Login</title>
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet">
+
+  <!-- Tailwind CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+
   <style>
-    body {
-      background: linear-gradient(135deg, #c4abdb, #f0d9ff);
-      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    @keyframes fadeInUp {
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
     }
-
-    .navbar-brand {
-      font-size: 28px;
-      letter-spacing: 2px;
-      font-weight: 700;
-    }
-
-    /* Hero Section */
-    .hero {
-      height: 40vh;
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-      align-items: center;
-      text-align: center;
-      color: #fff;
-    }
-
-    .hero h1 {
-      font-size: 3rem;
-      font-weight: 700;
-      text-shadow: 2px 2px 8px rgba(0,0,0,0.3);
-    }
-
-    .hero p {
-      font-size: 1.2rem;
-      margin: 15px 0;
-      color: #f8f9fa;
-    }
-
-    /* Login Form */
-    .login-card {
-      background-color: #ffffff;
-      border-radius: 12px;
-      box-shadow: 0 4px 20px rgba(0,0,0,0.1);
-      max-width: 400px;
-      margin: -50px auto 50px; /* overlap hero */
-      padding: 30px;
-    }
-
-    .login-card h3 {
-      text-align: center;
-      margin-bottom: 25px;
-      font-weight: 600;
-      color: #343a40;
-    }
-
-    .btn-login {
-      background-color: #343a40;
-      color: #fff;
-      font-weight: 500;
-      border-radius: 8px;
-      transition: 0.3s;
-    }
-
-    .btn-login:hover {
-      background-color: #495057;
-      color: #fff;
-    }
-
-    .signup-link {
-      text-align: center;
-      display: block;
-      margin-top: 15px;
-      color: #343a40;
-      text-decoration: none;
-      font-weight: 500;
-    }
-
-    .signup-link:hover {
-      text-decoration: underline;
-      color: #495057;
+    .fade-in {
+      animation: fadeInUp 1s ease-out forwards;
     }
   </style>
+
 </head>
-<body>
 
+<body class="bg-gradient-to-br from-purple-600 via-pink-500 to-blue-500 min-h-screen flex items-center justify-center px-4">
 
+  <div class="max-w-md w-full bg-white/20 backdrop-blur-xl rounded-2xl shadow-2xl p-8 fade-in border border-white/30">
 
-<!-- Hero Section -->
-<section class="hero">
-  <h1>Welcome Login</h1>
-</section>
+    <!-- Logo + Title -->
+    <div class="text-center mb-6">
+      <h1 class="text-4xl font-extrabold text-white drop-shadow-xl">Welcome Back</h1>
+      <p class="text-white/80 mt-1">Login to continue</p>
+    </div>
 
-<!-- Login Form -->
-<div class="container">
-  <div class="login-card">
-    <h3>Login</h3>
-    <h4 class="text-center text-danger">{{ msg }}</h4>
+    <!-- Error Message -->
+    <h4 class="text-center text-yellow-300 font-medium mb-3">{{ msg }}</h4>
+
+    <!-- Login Form -->
     <form method="post">
       {% csrf_token %}
-      <div class="mb-3">
-        <label for="emailInput" class="form-label">Email Address</label>
-        <input type="email" name="email" class="form-control" id="emailInput" placeholder="Enter your email">
-      </div>
-      <div class="mb-3">
-        <label for="passwordInput" class="form-label">Password</label>
-        <input type="password" name="password" class="form-control" id="passwordInput" placeholder="Enter your password">
-      </div>
-      <button type="submit" class="btn btn-login w-100 py-2">Login</button>
-    </form>
-    <a href="/signup" class="signup-link">Don't have an account? Sign up</a>
-  </div>
-</div>
 
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"></script>
+      <!-- Email -->
+      <div class="relative mb-6">
+        <input 
+          type="email" 
+          name="email"
+          class="peer w-full px-4 py-3 bg-white/20 text-white placeholder-transparent border border-white/40 rounded-lg focus:outline-none focus:ring-2 focus:ring-yellow-300"
+          placeholder="Email"
+        />
+        <label class="absolute left-4 -top-3.5 bg-transparent text-white text-sm transition-all peer-placeholder-shown:text-base peer-placeholder-shown:text-white/70 peer-placeholder-shown:top-3 peer-focus:-top-3.5 peer-focus:text-sm peer-focus:text-yellow-300">
+          Email Address
+        </label>
+      </div>
+
+      <!-- Password -->
+      <div class="relative mb-6">
+        <input 
+          type="password" 
+          name="password"
+          class="peer w-full px-4 py-3 bg-white/20 text-white placeholder-transparent border border-white/40 rounded-lg focus:outline-none focus:ring-2 focus:ring-yellow-300"
+          placeholder="Password"
+        />
+        <label class="absolute left-4 -top-3.5 bg-transparent text-white text-sm transition-all peer-placeholder-shown:text-base peer-placeholder-shown:text-white/70 peer-placeholder-shown:top-3 peer-focus:-top-3.5 peer-focus:text-sm peer-focus:text-yellow-300">
+          Password
+        </label>
+      </div>
+
+      <!-- Button -->
+      <button 
+        type="submit"
+        class="w-full bg-yellow-300 text-gray-900 py-3 rounded-lg font-bold shadow-lg hover:bg-white hover:shadow-yellow-300 transition"
+      >
+        Login
+      </button>
+    </form>
+
+    <!-- Signup -->
+    <p class="text-center mt-6 text-white/80">
+      Don't have an account? 
+      <a href="/signup" class="text-yellow-300 font-semibold hover:underline">
+        Sign up
+      </a>
+    </p>
+
+    <!-- Back to Home -->
+    <p class="text-center mt-4">
+      <a href="/" class="text-white font-medium hover:underline">
+        ← Go to Home
+      </a>
+    </p>
+
+  </div>
+
 </body>
 </html>

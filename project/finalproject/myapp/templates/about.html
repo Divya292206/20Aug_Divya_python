@@ -1,106 +1,169 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="shortcut icon" href="/static/img/image.png" type="image/x-icon">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>About Us | NotesApp</title>
+    <link rel="shortcut icon" href="https://cdn-icons-gif.flaticon.com/17518/17518063.gif" type="image/x-icon">
 
-    <title>NotesApp | About</title>
-
-    <!-- Bootstrap CSS -->
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet">
-
-    <style>
-        body {
-            background: linear-gradient(135deg, #c4abdb, #f0d9ff);
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-        }
-
-        /* Hero Section */
-        .hero {
-            height: 90vh;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            text-align: center;
-            color: #fff;
-            position: relative;
-        }
-
-        .hero h1 {
-            font-size: 4rem;
-            font-weight: 700;
-            text-shadow: 2px 2px 8px rgba(0,0,0,0.3);
-        }
-
-        .hero p {
-            font-size: 1.3rem;
-            margin: 20px 0;
-            color: #f8f9fa;
-        }
-
-        .hero .btn-primary {
-            padding: 12px 30px;
-            font-size: 1.1rem;
-            border-radius: 50px;
-            transition: 0.3s;
-        }
-
-        .hero .btn-primary:hover {
-            transform: scale(1.05);
-            box-shadow: 0 8px 20px rgba(0,0,0,0.3);
-        }
-
-        /* Navbar */
-        .navbar-brand {
-            font-size: 28px;
-            letter-spacing: 2px;
-            font-weight: 700;
-        }
-    </style>
+  <script src="https://cdn.tailwindcss.com"></script>
 </head>
-<body>
 
-<!-- Navbar Start -->
-<nav class="navbar navbar-expand-lg navbar-dark bg-dark shadow-sm py-3">
-    <div class="container">
-        <a class="navbar-brand" href="/"> <img src="/static/img/image.png" alt="NotesApp Logo" style="width:40px; height:40px; object-fit:contain;">
-    </a>
-        <a class="navbar-brand" href="#">NotesApp</a>
-        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
-            <span class="navbar-toggler-icon"></span>
+<body class="bg-gradient-to-br from-purple-50 via-pink-50 to-indigo-50 font-sans">
+
+<!-- ================= NAVBAR ================= -->
+<nav class="bg-gray-900/90 backdrop-blur-lg shadow-lg sticky top-0 z-50">
+    <div class="max-w-7xl mx-auto px-6 py-4 flex justify-between items-center">
+      <!-- Logo -->
+      <div class="flex items-center gap-3">
+      <img src="https://cdn-icons-gif.flaticon.com/17518/17518063.gif" class="w-10 h-10">
+        <h1 class="text-white text-2xl font-bold tracking-wide">NotesApp</h1>
+      </div>
+
+      <!-- Menu -->
+      <ul class="hidden md:flex gap-6 text-white font-medium items-center">
+        <li><a href="/" class="hover:text-yellow-300 transition">Home</a></li>
+        <li><a href="/notes" class="hover:text-yellow-300 transition">Notes</a></li>
+        {% if user %}
+        <li><a href="/profile" class="hover:text-yellow-300 transition">Profile</a></li>
+        {% endif %}
+        <li><a href="#" class="hover:text-yellow-300 transition font-semibold ">About</a></li>
+        <li><a href="/contact" class="hover:text-yellow-300 transition ">Contact</a></li>
+      </ul>
+
+      <!-- Auth Buttons / Dropdown -->
+      {% if user is none %}
+      <div class="hidden md:flex gap-3">
+        <a href="/signup" class="px-4 py-2 border border-white rounded-xl text-white hover:bg-white hover:text-black transition">Signup</a>
+        <a href="/login" class="px-4 py-2 bg-white rounded-xl text-black font-semibold hover:bg-yellow-300 transition">Login</a>
+      </div>
+      {% else %}
+      <div class="relative">
+        <button id="dropdownBtn" class="px-4 py-2 bg-white rounded-xl font-semibold flex items-center gap-2">
+          {{ user }} <span>▼</span>
         </button>
-        <div class="collapse navbar-collapse" id="navbarNav">
-            <ul class="navbar-nav mx-auto">
-                <li class="nav-item px-2"><a class="nav-link text-white" href="/">Home</a></li>
-                <li class="nav-item px-2"><a class="nav-link text-white" href="/notes">Notes</a></li>
-                {% if user%}
-                <li class="nav-item px-2"><a class="nav-link text-white" href="/profile">Profile</a></li>
-                {% endif %}
-                <li class="nav-item px-2"><a class="nav-link text-white active" href="#">About</a></li>
-                <li class="nav-item px-2"><a class="nav-link text-white" href="/contact">Contact</a></li>
-            </ul>
-            
-            <div class="d-flex">
-                <a href="/signup" class="btn btn-outline-light rounded-pill px-4 mx-2">Signup</a>
-                <a href="/login" class="btn btn-light text-dark rounded-pill px-4">Login</a>
-            </div>
-        </div>
+        <ul id="dropdownMenu" class="hidden absolute right-0 bg-white shadow-xl rounded-xl mt-2 w-40 z-50">
+          <li><a class="block px-4 py-2 hover:bg-gray-100" href="/profile">Update Profile</a></li>
+          <li><a class="block px-4 py-2 hover:bg-gray-100" href="/userlogout">Logout</a></li>
+        </ul>
+      </div>
+      {% endif %}
     </div>
-</nav>
+  </nav>
 
-
-<!-- Navbar End -->
-
-<!-- Hero Section Start -->
-<section class="hero">
-    <h1>Welcome to About Page</h1>
-    <p>Your go-to app for managing notes efficiently and effectively.</p>   
+<!-- ================= HERO ================= -->
+<section class="text-center py-20">
+  <h2 class="text-4xl font-extrabold text-gray-800">About NotesApp</h2>
+  <p class="mt-4 text-gray-600 max-w-2xl mx-auto">
+    NotesApp is your personal digital notebook designed to help you write,
+    organize and manage notes easily and securely.
+  </p>
 </section>
-<!-- Hero Section End -->
 
-<!-- Bootstrap JS -->
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"></script>
+<!-- ================= ABOUT CONTENT ================= -->
+<section class="max-w-7xl mx-auto px-6 pb-20 grid lg:grid-cols-2 gap-12 items-center">
+
+  <!-- LEFT TEXT -->
+  <div class="space-y-6">
+    <h3 class="text-3xl font-bold text-gray-800">Who We Are</h3>
+    <p class="text-gray-600 leading-relaxed">
+      NotesApp is built for students, professionals, and creators who want
+      a simple yet powerful way to manage their ideas. Whether you're taking
+      quick notes or organizing important information, NotesApp keeps everything
+      in one secure place.
+    </p>
+    <p class="text-gray-600 leading-relaxed">
+      Our platform focuses on simplicity, speed, and security. We continuously
+      improve our features to give you the best note-taking experience.
+    </p>
+  </div>
+
+  <!-- RIGHT IMAGE -->
+  <div class="flex justify-center">
+    <img src="data:image/jpeg;base64,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"
+         alt="About NotesApp"
+         class="w-full max-w-md">
+  </div>
+</section>
+
+<!-- ================= FEATURES ================= -->
+<section class="bg-white py-20">
+  <div class="max-w-7xl mx-auto px-6">
+    <h3 class="text-3xl font-bold text-center text-gray-800 mb-12">
+      Why Choose NotesApp?
+    </h3>
+
+    <div class="grid md:grid-cols-3 gap-8">
+      <div class="bg-gradient-to-br from-purple-100 to-pink-100 p-8 rounded-2xl shadow text-center">
+        <div class="text-4xl mb-4">📝</div>
+        <h4 class="font-bold text-xl mb-2">Easy Notes</h4>
+        <p class="text-gray-600 text-sm">
+          Create and manage notes with a clean and user-friendly interface.
+        </p>
+      </div>
+
+      <div class="bg-gradient-to-br from-purple-100 to-pink-100 p-8 rounded-2xl shadow text-center">
+        <div class="text-4xl mb-4">🔒</div>
+        <h4 class="font-bold text-xl mb-2">Secure Data</h4>
+        <p class="text-gray-600 text-sm">
+          Your notes are protected with secure authentication and storage.
+        </p>
+      </div>
+
+      <div class="bg-gradient-to-br from-purple-100 to-pink-100 p-8 rounded-2xl shadow text-center">
+        <div class="text-4xl mb-4">⚡</div>
+        <h4 class="font-bold text-xl mb-2">Fast & Reliable</h4>
+        <p class="text-gray-600 text-sm">
+          Enjoy smooth performance with quick access to all your notes.
+        </p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= STATS ================= -->
+<section class="py-20">
+  <div class="max-w-7xl mx-auto px-6 grid md:grid-cols-3 gap-8 text-center">
+    <div>
+      <h3 class="text-4xl font-extrabold text-pink-500">10K+</h3>
+      <p class="text-gray-600">Active Users</p>
+    </div>
+    <div>
+      <h3 class="text-4xl font-extrabold text-pink-500">50K+</h3>
+      <p class="text-gray-600">Notes Created</p>
+    </div>
+    <div>
+      <h3 class="text-4xl font-extrabold text-pink-500">99.9%</h3>
+      <p class="text-gray-600">Uptime</p>
+    </div>
+  </div>
+</section>
+
+<!-- ================= FOOTER ================= -->
+<footer class="bg-gray-900 text-gray-300 py-12">
+  <div class="max-w-7xl mx-auto px-6 grid md:grid-cols-3 gap-8">
+    <div>
+      <h4 class="text-white font-bold text-xl">NotesApp</h4>
+      <p class="mt-3 text-sm">Write. Save. Organize.</p>
+    </div>
+
+    <div>
+      <h4 class="text-white font-bold text-xl">Quick Links</h4>
+      <ul class="mt-3 space-y-2">
+        <li><a href="/" class="hover:text-pink-400">Home</a></li>
+        <li><a href="/notes" class="hover:text-pink-400">Notes</a></li>
+        <li><a href="/contact" class="hover:text-pink-400">Contact</a></li>
+      </ul>
+    </div>
+
+    <div>
+      <h4 class="text-white font-bold text-xl">Follow Us</h4>
+      <div class="flex gap-4 mt-3 text-xl">
+        🐦 📘 📸
+      </div>
+    </div>
+  </div>
+</footer>
+
 </body>
 </html>

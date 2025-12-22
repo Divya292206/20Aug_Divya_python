@@ -1,153 +1,173 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <link rel="shortcut icon" href="/static/img/image.png" type="image/x-icon">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Contact Us | NotesApp</title>
+    <link rel="shortcut icon" href="https://cdn-icons-gif.flaticon.com/17518/17518063.gif" type="image/x-icon">
 
-  <title>NotesApp | Contact Us</title>
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet">
-  <style>
-    body {
-      background: linear-gradient(135deg, #c4abdb, #f0d9ff);
-      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-    }
-
-    .navbar-brand {
-      font-size: 28px;
-      letter-spacing: 2px;
-      font-weight: 700;
-    }
-
-    /* Hero Section */
-    .hero {
-      height: 30vh;
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-      align-items: center;
-      text-align: center;
-      color: #fff;
-    }
-
-    .hero h1 {
-      font-size: 3rem;
-      font-weight: 700;
-      text-shadow: 2px 2px 8px rgba(0,0,0,0.3);
-    }
-
-    .hero p {
-      font-size: 1.2rem;
-      margin: 15px 0;
-      color: #f8f9fa;
-    }
-
-    /* Contact Form */
-    .contact-card {
-      background-color: #ffffff;
-      border-radius: 12px;
-      box-shadow: 0 4px 20px rgba(0,0,0,0.1);
-      max-width: 500px;
-      margin: -50px auto 50px; /* overlap hero */
-      padding: 30px;
-    }
-
-    .contact-card h3 {
-      text-align: center;
-      margin-bottom: 25px;
-      font-weight: 600;
-      color: #343a40;
-    }
-
-    .btn-contact {
-      background-color: #343a40;
-      color: #fff;
-      font-weight: 500;
-      border-radius: 8px;
-      transition: 0.3s;
-    }
-
-    .btn-contact:hover {
-      background-color: #495057;
-      color: #fff;
-    }
-
-    .info-text {
-      text-align: center;
-      margin-top: 15px;
-      color: #343a40;
-      font-weight: 500;
-    }
-  </style>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
 </head>
-<body>
+<body class="bg-gray-100 font-sans">
 
-<!-- Navbar Start -->
-<nav class="navbar navbar-expand-lg navbar-dark bg-dark shadow-sm py-3">
-  <div class="container">
-    <a class="navbar-brand" href="/"> <img src="/static/img/image.png" alt="NotesApp Logo" style="width:40px; height:40px; object-fit:contain;">
-    </a>
-    <a class="navbar-brand" href="#">NotesApp</a>
-    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
-      <span class="navbar-toggler-icon"></span>
-    </button>
-    <div class="collapse navbar-collapse" id="navbarNav">
-      <ul class="navbar-nav mx-auto">
-        <li class="nav-item px-2"><a class="nav-link text-white" href="/">Home</a></li>
-        <li class="nav-item px-2"><a class="nav-link text-white" href="/notes">Notes</a></li>
+  <!-- NAVBAR -->
+  <nav class="bg-gray-900/90 backdrop-blur-lg shadow-lg sticky top-0 z-50">
+    <div class="max-w-7xl mx-auto px-6 py-4 flex justify-between items-center">
+      <!-- Logo -->
+      <div class="flex items-center gap-3">
+      <img src="https://cdn-icons-gif.flaticon.com/17518/17518063.gif" class="w-10 h-10">
+        <h1 class="text-white text-2xl font-bold tracking-wide">NotesApp</h1>
+      </div>
+
+      <!-- Menu -->
+      <ul class="hidden md:flex gap-6 text-white font-medium items-center">
+        <li><a href="/" class="hover:text-yellow-300 transition">Home</a></li>
+        <li><a href="/notes" class="hover:text-yellow-300 transition">Notes</a></li>
         {% if user %}
-        <li class="nav-item px-2"><a class="nav-link text-white" href="/profile">Profile</a></li>
+        <li><a href="/profile" class="hover:text-yellow-300 transition">Profile</a></li>
         {% endif %}
-        <li class="nav-item px-2"><a class="nav-link text-white" href="/about">About</a></li>
-        <li class="nav-item px-2"><a class="nav-link text-white active" href="/contact">Contact</a></li>
+        <li><a href="/about" class="hover:text-yellow-300 transition">About</a></li>
+        <li><a href="/contact" class="hover:text-yellow-300 transition font-semibold">Contact</a></li>
       </ul>
-      <div class="d-flex">
-        <a href="/signup" class="btn btn-outline-light rounded-pill px-4 mx-2">Signup</a>
-        <a href="/login" class="btn btn-light text-dark rounded-pill px-4">Login</a>
+
+      <!-- Auth Buttons / Dropdown -->
+      {% if user is none %}
+      <div class="hidden md:flex gap-3">
+        <a href="/signup" class="px-4 py-2 border border-white rounded-xl text-white hover:bg-white hover:text-black transition">Signup</a>
+        <a href="/login" class="px-4 py-2 bg-white rounded-xl text-black font-semibold hover:bg-yellow-300 transition">Login</a>
+      </div>
+      {% else %}
+      <div class="relative">
+        <button id="dropdownBtn" class="px-4 py-2 bg-white rounded-xl font-semibold flex items-center gap-2">
+          {{ user }} <span>▼</span>
+        </button>
+        <ul id="dropdownMenu" class="hidden absolute right-0 bg-white shadow-xl rounded-xl mt-2 w-40 z-50">
+          <li><a class="block px-4 py-2 hover:bg-gray-100" href="/profile">Update Profile</a></li>
+          <li><a class="block px-4 py-2 hover:bg-gray-100" href="/userlogout">Logout</a></li>
+        </ul>
+      </div>
+      {% endif %}
+    </div>
+  </nav>
+
+  <!-- MAIN SECTION -->
+  <section class="container mx-auto px-4 py-12 grid lg:grid-cols-2 gap-10">
+
+    <!-- LEFT: MAP + CONTACT INFO -->
+    <div class="space-y-8">
+
+      <!-- Google Map -->
+      <div class="w-full h-80 rounded-xl overflow-hidden shadow-lg">
+        <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d53452.58623176048!2d70.7236898908361!3d22.289752220920708!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3959ca0dca65c1bb%3A0xc78be9d9199a460f!2sRK%20Infotech%20-%20IT%20Company!5e1!3m2!1sen!2sin!4v1765870420966!5m2!1sen!2sin" width="600" height="450" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+      </div>
+
+      <!-- Address Card -->
+      <div class="bg-white p-6 rounded-xl shadow-lg space-y-6">
+        <div class="flex items-start space-x-4">
+          <i class="fas fa-map-marker-alt text-pink-500 text-2xl mt-1"></i>
+          <div>
+            <h3 class="text-lg font-semibold">Office Address</h3>
+            <p class="text-gray-600">
+              B/H TwinStar, RK House, 
+              Chowk, 150 Feet Ring Rd, <br>
+              near Nana Mava, Ram Vihar Society, <br>
+              Rajkot, Gujarat 360004
+            </p>
+          </div>
+        </div>
+
+        <div class="flex items-start space-x-4">
+          <i class="fas fa-envelope text-pink-500 text-2xl mt-1"></i>
+          <div>
+            <h3 class="text-lg font-semibold">Email</h3>
+            <p class="text-gray-600">dp062922@gmail.com</p>
+          </div>
+        </div>
+
+        <div class="flex items-start space-x-4">
+          <i class="fas fa-phone text-pink-500 text-2xl mt-1"></i>
+          <div>
+            <h3 class="text-lg font-semibold">Phone</h3>
+            <p class="text-gray-600">+91 9023063878</p>
+          </div>
+        </div>
+
+        <p class="text-gray-500 text-sm">
+          Visit our office during working hours or reach out via email or phone.
+          Our team is always happy to assist you.
+        </p>
       </div>
     </div>
-  </div>
-</nav>
-<!-- Navbar End -->
 
-<!-- Hero Section -->
-<section class="hero">
-  <h1>Contact Us</h1>
-  <p>We’d love to hear from you! Send us a message.</p>
-</section>
+    <!-- RIGHT: CONTACT FORM -->
+    <div class="bg-white p-8 rounded-xl shadow-lg">
+      <h2 class="text-2xl font-bold mb-6 text-gray-800">Send Us a Message</h2>
 
-<!-- Contact Form -->
-<div class="container">
-  <div class="contact-card">
-    <h3>Send a Message</h3>
-    <form method="post">
-      {% csrf_token %}
-      <div class="mb-3">
-        <label for="nameInput" class="form-label">Full Name</label>
-        <input type="text" name="name" class="form-control" id="nameInput" placeholder="Enter your full name" required>
+      <form class="space-y-5" method="post">
+        {% csrf_token %}
+        <input type="text" required placeholder="Full Name" name="name"
+               class="w-full px-4 py-3 border rounded-xl focus:ring-2 focus:ring-pink-500 focus:outline-none">
+
+        <input type="email" required placeholder="Email Address" name="email"
+               class="w-full px-4 py-3 border rounded-xl focus:ring-2 focus:ring-pink-500 focus:outline-none">
+
+        <input type="text" placeholder="Subject" name="subject"
+               class="w-full px-4 py-3 border rounded-xl focus:ring-2 focus:ring-pink-500 focus:outline-none">
+
+        <textarea rows="5" required placeholder="Write your message..." name="msg"
+                  class="w-full px-4 py-3 border rounded-xl focus:ring-2 focus:ring-pink-500 focus:outline-none"></textarea>
+
+        <button
+          class="w-full bg-gradient-to-r from-purple-600 to-pink-500 hover:from-pink-500 hover:to-purple-600
+                 text-white py-3 rounded-xl font-semibold transition transform hover:-translate-y-1 hover:scale-105">
+          Send Message
+        </button>
+      </form>
+    </div>
+
+  </section>
+
+  <!-- FOOTER -->
+  <footer class="bg-gray-900 text-white py-12">
+    <div class="max-w-7xl mx-auto px-6 grid grid-cols-1 md:grid-cols-3 gap-8">
+      <div>
+        <h3 class="font-bold text-xl mb-4">NotesApp</h3>
+        <p class="text-gray-400">Your personal space to write, organize, and manage your notes anytime, anywhere.</p>
       </div>
-
-      <div class="mb-3">
-        <label for="emailInput" class="form-label">Email Address</label>
-        <input type="email" name="email" class="form-control" id="emailInput" placeholder="Enter your email" required>
+      <div>
+        <h3 class="font-bold text-xl mb-4">Quick Links</h3>
+        <ul class="space-y-2">
+          <li><a href="/" class="hover:text-yellow-300 transition">Home</a></li>
+          <li><a href="/notes" class="hover:text-yellow-300 transition">Notes</a></li>
+          <li><a href="/about" class="hover:text-yellow-300 transition">About</a></li>
+          <li><a href="/contact" class="hover:text-yellow-300 transition">Contact</a></li>
+        </ul>
       </div>
-
-      <div class="mb-3">
-        <label for="subjectInput" class="form-label">Subject</label>
-        <input type="text" name="subject" class="form-control" id="subjectInput" placeholder="Subject" required>
+      <div>
+        <h3 class="font-bold text-xl mb-4">Follow Us</h3>
+        <div class="flex gap-4">
+          <a href="#" class="hover:text-yellow-300 transition">🐦 Twitter</a>
+          <a href="#" class="hover:text-yellow-300 transition">📘 Facebook</a>
+          <a href="#" class="hover:text-yellow-300 transition">📸 Instagram</a>
+        </div>
       </div>
+    </div>
+  </footer>
 
-      <div class="mb-3">
-        <label for="messageInput" class="form-label">Message</label>
-        <textarea name="msg" class="form-control" id="messageInput" rows="5" placeholder="Write your message..." required></textarea>
-      </div>
 
-      <button type="submit" class="btn btn-contact w-100 py-2">Send Message</button>
-    </form>
-    <p class="info-text">We'll get back to you within 24 hours.</p>
-  </div>
-</div>
+  <!-- WhatsApp Chat Icon -->
+<a
+  href="https://wa.me/919023063878?text=Hello%20I%20need%20information"
+  target="_blank"
+  class="fixed bottom-6 right-6 bg-green-500 hover:bg-green-600 text-white p-4 rounded-full shadow-lg transition duration-300 z-50"
+  aria-label="Chat on WhatsApp"
+>
+  <!-- WhatsApp SVG Icon -->
+  <svg xmlns="http://www.w3.org/2000/svg" class="w-7 h-7" fill="currentColor" viewBox="0 0 24 24">
+    <path d="M12.04 2C6.57 2 2.11 6.46 2.11 11.93c0 1.95.5 3.86 1.45 5.57L2 22l4.65-1.22c1.64.89 3.49 1.36 5.39 1.36h.01c5.47 0 9.93-4.46 9.93-9.93C21.98 6.46 17.52 2 12.04 2z"/>
+  </svg>
+</a>
 
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>
