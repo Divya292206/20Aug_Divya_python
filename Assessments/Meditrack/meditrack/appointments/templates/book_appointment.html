@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Book Appointment | MediTrack</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gray-100 min-h-screen">
+
+<nav class="bg-green-600 px-6 py-4 flex justify-between items-center text-white">
+  <h1 class="text-xl font-bold">MediTrack</h1>
+  <a href="/appointments/" class="bg-white text-green-600 px-4 py-2 rounded">Back</a>
+</nav>
+
+<div class="container mx-auto px-6 py-10">
+  <div class="bg-white shadow-lg rounded-xl p-8 max-w-2xl mx-auto">
+
+    <h2 class="text-3xl font-bold text-green-600 mb-6">Book Appointment</h2>
+
+    <form method="post" class="space-y-5">
+      {% csrf_token %}
+
+      <div>
+        <label class="block font-semibold mb-2">Selected Doctor</label>
+        <input type="text" readonly
+          value="{{ doctor.user.name }} ({{ doctor.specialization }})"
+          class="w-full px-4 py-2 border rounded bg-gray-100">
+      </div>
+
+      <div>
+        <label class="block font-semibold mb-2">Date</label>
+        {{ form.date }}
+      </div>
+
+      <div>
+        <label class="block font-semibold mb-2">Time</label>
+        {{ form.time }}
+      </div>
+
+     <button type="submit" class="bg-green-600 text-white px-6 py-2 rounded hover:bg-green-700">
+    Confirm Appointment
+</button>
+
+    </form>
+
+  </div>
+</div>
+
+</body>
+</html>

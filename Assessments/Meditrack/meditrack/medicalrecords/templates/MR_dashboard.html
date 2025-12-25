@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Medical Records | MediTrack</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+
+<body class="bg-gray-100 min-h-screen">
+
+    <!-- Navbar -->
+    <nav class="bg-purple-600 px-6 py-4 flex justify-between items-center text-white">
+        <h1 class="text-xl font-bold">MediTrack | Medical Records</h1>
+        <a href="/logout/"
+           class="bg-red-500 px-4 py-2 rounded-lg hover:bg-red-600 transition">
+            Logout
+        </a>
+    </nav>
+
+    <!-- Content -->
+    <div class="container mx-auto px-6 py-8">
+
+        <!-- Header -->
+        <div class="flex justify-between items-center mb-6">
+            <h2 class="text-2xl font-bold text-gray-700">
+                Medical History
+            </h2>
+
+            <!-- Doctor only (future backend control) -->
+            <button class="bg-purple-600 text-white px-4 py-2 rounded-lg hover:bg-purple-700">
+                Upload New Record
+            </button>
+        </div>
+
+        <!-- Records Table -->
+        <div class="bg-white shadow rounded-xl overflow-x-auto">
+            <table class="w-full border-collapse">
+                <thead class="bg-gray-100">
+                    <tr>
+                        <th class="px-4 py-3 border">Date</th>
+                        <th class="px-4 py-3 border">Doctor</th>
+                        <th class="px-4 py-3 border">Diagnosis</th>
+                        <th class="px-4 py-3 border">File</th>
+                        <th class="px-4 py-3 border">Action</th>
+                    </tr>
+                </thead>
+
+                <tbody>
+                    <tr class="hover:bg-gray-50">
+                        <td class="px-4 py-2 border">15 Dec 2025</td>
+                        <td class="px-4 py-2 border">Dr. Patel</td>
+                        <td class="px-4 py-2 border">Fever & Cold</td>
+                        <td class="px-4 py-2 border">prescription.pdf</td>
+                        <td class="px-4 py-2 border">
+                            <a href="#"
+                               class="text-blue-600 hover:underline">
+                                Download
+                            </a>
+                        </td>
+                    </tr>
+
+                    <tr class="hover:bg-gray-50">
+                        <td class="px-4 py-2 border">01 Dec 2025</td>
+                        <td class="px-4 py-2 border">Dr. Mehta</td>
+                        <td class="px-4 py-2 border">Blood Test</td>
+                        <td class="px-4 py-2 border">report.pdf</td>
+                        <td class="px-4 py-2 border">
+                            <a href="#"
+                               class="text-blue-600 hover:underline">
+                                Download
+                            </a>
+                        </td>
+                    </tr>
+
+                </tbody>
+            </table>
+        </div>
+
+    </div>
+
+</body>
+</html>

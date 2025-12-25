@@ -1,0 +1,71 @@
+  <!DOCTYPE html>
+  <html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Dashboard | MediTrack</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+  </head>
+  <body class="bg-gray-100 min-h-screen font-sans">
+
+    <!-- Navbar -->
+    <nav class="bg-teal-600 text-white px-6 py-4 flex justify-between items-center shadow-md">
+      <h1 class="font-bold text-2xl tracking-wide">MediTrack Admin</h1>
+      <a href="/adminapp/userlogout/" class="bg-red-500 px-4 py-2 rounded-lg hover:bg-red-600 transition font-semibold shadow">Logout</a>
+    </nav>
+
+    <div class="flex flex-col md:flex-row">
+
+      <!-- Sidebar -->
+      <aside class="w-full md:w-64 bg-gradient-to-b from-teal-500 to-teal-700 text-white h-auto md:h-screen p-6 space-y-6 rounded-r-xl shadow-lg">
+        <h2 class="text-lg font-bold mb-4 tracking-wide">Menu</h2>
+        <ul class="space-y-2">
+          <li><a href="#" class="block p-3 rounded-lg hover:bg-teal-400 transition font-medium"><b>Dashboard</b></a></li>
+          <li><a href="/adminapp/patient_data" class="block p-3 rounded-lg hover:bg-teal-400 transition font-medium">Patients</a></li>
+          <li><a href="/adminapp/admin_doctors_data" class="block p-3 rounded-lg hover:bg-teal-400 transition font-medium">Doctors</a></li>
+          <li><a href="/adminapp/admin_appointments" class="block p-3 rounded-lg hover:bg-teal-400 transition font-medium">Appointments</a></li>
+        </ul>
+      </aside>
+
+      <!-- Main Content -->
+      <main class="flex-1 p-6">
+
+        <h2 class="text-3xl font-extrabold mb-6 text-gray-800 tracking-wide">Welcome, Admin!</h2>
+
+        <!-- Cards Row -->
+        <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6 mb-6">
+
+          <div class="bg-gradient-to-r from-blue-500 to-blue-700 text-white p-6 rounded-xl shadow-md hover:shadow-xl transition transform hover:-translate-y-1">
+            <h3 class="text-lg font-semibold">Total Patients</h3>
+            <p class="text-4xl font-bold mt-2">{{ total_patient }}</p>
+          </div>
+
+          <div class="bg-gradient-to-r from-blue-500 to-blue-700 text-white p-6 rounded-xl shadow-md hover:shadow-xl transition transform hover:-translate-y-1">
+            <h3 class="text-lg font-semibold">Total Doctors</h3>
+            <p class="text-4xl font-bold mt-2">{{ total_doctor }}</p>
+          </div>
+
+          <!-- <div class="bg-gradient-to-r from-teal-400 to-teal-600 text-white p-6 rounded-xl shadow-md hover:shadow-xl transition transform hover:-translate-y-1">
+            <h3 class="text-lg font-semibold">Pending Appointments</h3>
+            <p class="text-4xl font-bold mt-2">{{ total_pending_appointments }}</p>
+          </div>
+
+          <div class="bg-gradient-to-r from-teal-400 to-teal-600 text-white p-6 rounded-xl shadow-md hover:shadow-xl transition transform hover:-translate-y-1">
+            <h3 class="text-lg font-semibold">Approved Appointments</h3>
+            <p class="text-4xl font-bold mt-2">{{ total_approved_appointments }}</p>
+          </div>
+
+          <div class="bg-gradient-to-r from-teal-400 to-teal-600 text-white p-6 rounded-xl shadow-md hover:shadow-xl transition transform hover:-translate-y-1">
+            <h3 class="text-lg font-semibold">Rejected Appointments</h3>
+            <p class="text-4xl font-bold mt-2">{{ total_rejected_appointments }}</p>
+          </div> -->
+
+        </div>
+
+        
+
+      </main>
+    </div>
+
+  </body>
+  </html>

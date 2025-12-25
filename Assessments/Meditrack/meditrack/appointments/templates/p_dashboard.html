@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Patient Dashboard | MediTrack</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <style>
+    .tab-content { display: none; }
+    .tab-content.active { display: block; }
+  </style>
+</head>
+<body class="bg-gradient-to-b from-green-50 to-blue-100 min-h-screen">
+
+<!-- Navbar -->
+<nav class="bg-green-600 px-6 py-4 flex justify-between items-center text-white shadow-lg sticky top-0 z-50">
+  <h1 class="text-2xl font-bold">MediTrack</h1>
+
+  <div class="flex items-center space-x-6">
+    <button class="tab-btn font-semibold active hover:text-gray-200" data-tab="dashboard">Dashboard</button>
+    <button class="tab-btn font-semibold hover:text-gray-200" data-tab="book">Book Appointment</button>
+    <button class="tab-btn font-semibold hover:text-gray-200" data-tab="appointments">Appointments</button>
+    <a href="/appointments/logout/" class="bg-red-500 px-4 py-2 rounded-lg hover:bg-red-600 transition">Logout</a>
+  </div>
+</nav>
+
+<div class="container mx-auto px-6 py-8">
+
+  <!-- Dashboard -->
+  <div id="dashboard" class="tab-content active">
+    <div class="bg-white rounded-2xl shadow-lg p-8 mb-8">
+      <h2 class="text-3xl font-bold mb-4 text-green-700">Welcome, {{ cuser.name }} 👋</h2>
+      <p class="text-gray-600 text-lg">Use the menu above to book appointments or view your scheduled visits.</p>
+    </div>
+  </div>
+
+  <!-- Book Appointment -->
+  <div id="book" class="tab-content">
+    <h2 class="text-3xl font-bold text-green-600 mb-6">Select a Doctor</h2>
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+      {% for d in doctors %}
+      <div class="bg-white rounded-2xl shadow-lg p-6 hover:shadow-2xl transition transform hover:-translate-y-1">
+        <h3 class="text-xl font-bold mb-1">{{ d.user.name }}</h3>
+        <p class="text-green-600 font-semibold mb-1">🩺 {{ d.specialization }}</p>
+        <p class="text-gray-500 mb-4">⏰ {{ d.availability }}</p>
+
+        <a href="/appointments/book_appointment/{{ d.id }}/"
+           class="block text-center bg-green-600 text-white py-2 rounded-xl font-semibold hover:bg-green-700 transition">
+          Book Appointment
+        </a>
+      </div>
+      {% endfor %}
+    </div>
+  </div>
+
+  <!-- View Appointments -->
+  <div id="appointments" class="tab-content">
+    <h2 class="text-3xl font-bold text-blue-600 mb-6">Your Appointments</h2>
+    <div class="bg-white rounded-2xl shadow-lg overflow-x-auto">
+      <table class="w-full text-sm">
+        <thead class="bg-gray-100">
+          <tr>
+            <th class="px-6 py-3 text-left border-b">Doctor</th>
+            <th class="px-6 py-3 text-left border-b">Date</th>
+            <th class="px-6 py-3 text-left border-b">Time</th>
+            <th class="px-6 py-3 text-left border-b">Status</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for appt in appointments %}
+          <tr class="hover:bg-gray-50 transition text-center">
+            <td class="px-6 py-3 border-b">{{ appt.doctor.user.name }}</td>
+            <td class="px-6 py-3 border-b">{{ appt.date }}</td>
+            <td class="px-6 py-3 border-b">{{ appt.time }}</td>
+            <td class="px-6 py-3 border-b">
+              <span class="px-3 py-1 rounded-full text-white font-semibold 
+                {% if appt.status == 'Approved' %}bg-green-500
+                {% elif appt.status == 'Pending' %}bg-yellow-500
+                {% else %}bg-red-500{% endif %}">
+                {{ appt.status }}
+              </span>
+            </td>
+          </tr>
+          {% empty %}
+          <tr>
+            <td colspan="4" class="px-6 py-8 text-gray-500 text-center">No appointments found</td>
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+</div>
+
+<script>
+  const tabs = document.querySelectorAll('.tab-btn');
+  const contents = document.querySelectorAll('.tab-content');
+
+  tabs.forEach(tab => {
+    tab.addEventListener('click', () => {
+      tabs.forEach(t => t.classList.remove('active'));
+      tab.classList.add('active');
+
+      contents.forEach(c => c.classList.remove('active'));
+      document.getElementById(tab.dataset.tab).classList.add('active');
+    });
+  });
+</script>
+
+</body>
+</html>
