@@ -4,5 +4,4 @@ from myapp import views
 
 urlpatterns = [
     path('', views.index, name='index'),
-    path('adminhome/', views.admin_home, name='admin_home'),
 ]

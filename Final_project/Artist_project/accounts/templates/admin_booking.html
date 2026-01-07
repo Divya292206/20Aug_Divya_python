@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Bookings | Admin</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+</head>
+
+<body class="min-h-screen bg-[#080614] text-white p-6">
+
+  <!-- Glow Background -->
+  <div class="absolute w-[500px] h-[500px] bg-pink-500 blur-[250px] opacity-20"></div>
+
+  <!-- Container -->
+  <div class="relative max-w-7xl mx-auto">
+
+    <!-- Header -->
+    <div class="flex justify-between items-center mb-8">
+      <h1 class="text-3xl font-extrabold">
+        📅 Bookings Management
+      </h1>
+
+      <a href="{% url 'admin_dashboard' %}"
+         class="px-5 py-2 rounded-full bg-white/10 border border-white/20 hover:bg-white/20 transition">
+        ← Back to Dashboard
+      </a>
+    </div>
+
+    <!-- Table Card -->
+    <div class="bg-white/10 backdrop-blur-xl border border-white/20 rounded-3xl shadow-xl overflow-hidden">
+
+      <div class="overflow-x-auto">
+        <table class="w-full text-left">
+          <thead class="bg-black/40">
+            <tr>
+              <th class="px-6 py-4">ID</th>
+              <th class="px-6 py-4">Customer</th>
+              <th class="px-6 py-4">Artist</th>
+              <th class="px-6 py-4">Event Date</th>
+              <th class="px-6 py-4">City</th>
+              <th class="px-6 py-4">Message</th>
+              <th class="px-6 py-4">Status</th>
+              <th class="px-6 py-4 text-center">Action</th>
+            </tr>
+          </thead>
+
+          <tbody>
+          {% for booking in bookings %}
+            <tr class="border-b border-white/10 hover:bg-white/5 transition">
+              <td class="px-6 py-4 font-semibold">{{ booking.id }}</td>
+              <td class="px-6 py-4">{{ booking.customer.full_name|default:"—" }}</td>
+              <td class="px-6 py-4">{{ booking.artist.user.full_name }}</td>
+              <td class="px-6 py-4">{{ booking.event_date }}</td>
+              <td class="px-6 py-4">{{ booking.city|default:"—" }}</td>
+              <td class="px-6 py-4 text-white/70">{{ booking.message|default:"—" }}</td>
+
+              <!-- STATUS -->
+              <td class="px-6 py-4">
+                {% if booking.status == 'PENDING' %}
+                  <span class="px-3 py-1 rounded-full bg-yellow-500/20 text-yellow-400 text-sm">Pending</span>
+                {% elif booking.status == 'CONFIRMED' %}
+                  <span class="px-3 py-1 rounded-full bg-green-500/20 text-green-400 text-sm">Confirmed</span>
+                {% elif booking.status == 'CANCELLED' %}
+                  <span class="px-3 py-1 rounded-full bg-red-500/20 text-red-400 text-sm">Cancelled</span>
+                {% endif %}
+              </td>
+
+              <!-- ACTION -->
+              <td class="px-6 py-4 text-center">
+                <div class="flex justify-center gap-3">
+                  {% if booking.status == 'PENDING' %}
+                    <a href="{% url 'confirm_booking' booking.id %}"
+                       class="px-4 py-2 rounded-full bg-green-500 hover:bg-green-600 font-semibold transition">
+                      Confirm
+                    </a>
+                    <a href="{% url 'cancel_booking' booking.id %}"
+                       class="px-4 py-2 rounded-full bg-red-500 hover:bg-red-600 font-semibold transition">
+                      Cancel
+                    </a>
+                  {% else %}
+                    <span class="text-white/70 font-semibold">{{ booking.status }}</span>
+                  {% endif %}
+                </div>
+              </td>
+            </tr>
+          {% empty %}
+            <tr>
+              <td colspan="8" class="px-6 py-10 text-center text-white/60">
+                🚫 No bookings found
+              </td>
+            </tr>
+          {% endfor %}
+          </tbody>
+        </table>
+      </div>
+
+    </div>
+
+  </div>
+
+</body>
+</html>

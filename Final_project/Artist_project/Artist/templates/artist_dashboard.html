@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Artist Dashboard | Artist Hub</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+</head>
+
+<body class="bg-[#0F0C29] text-white min-h-screen">
+
+<!-- ================= NAVBAR ================= -->
+<nav class="flex justify-between items-center px-12 py-5 bg-[#0B1220] border-b border-white/10 fixed w-full z-50">
+  <h1 class="text-2xl font-bold tracking-wide text-amber-400">
+    🎨 Artist Hub
+  </h1>
+
+  <div class="space-x-6 text-sm font-semibold">
+    <a href="/" class="text-amber-400">Dashboard</a>
+    <a href="{% url 'artist_bookings' %}" class="hover:text-amber-400">Bookings</a>
+    <a href="{% url 'artist_media' %}" class="hover:text-amber-400">Media</a>
+    <a href="{% url 'artist_profile' %}" class="hover:text-amber-400">Profile</a>
+    <a href="/logout/" class="text-red-400">Logout</a>
+  </div>
+</nav>
+
+<!-- ================= DASHBOARD ================= -->
+<section class="pt-32 px-12 max-w-6xl mx-auto">
+
+  <!-- Welcome -->
+  <div class="mb-16 text-center">
+    <h2 class="text-5xl font-extrabold mb-4 text-orange-400">
+      👋 Welcome Back, Artist!
+    </h2>
+    <p class="text-white/70 text-lg">
+      Manage your bookings, media, and profile from one place
+    </p>
+  </div>
+
+  <!-- ================= QUICK ACTIONS ================= -->
+  <h3 class="text-3xl font-bold mb-10 text-pink-400 text-center">
+    ⚡ Quick Actions
+  </h3>
+
+  <div class="grid md:grid-cols-3 gap-10">
+
+    <!-- Upload Media -->
+    <a href="{% url 'artist_media' %}"
+       class="bg-white/10 backdrop-blur-xl border border-white/20 rounded-3xl p-10 text-center hover:-translate-y-2 transition shadow-xl">
+      <div class="text-5xl mb-4">📤</div>
+      <h4 class="text-xl font-bold mb-2">Upload Media</h4>
+      <p class="text-white/70">Add photos & videos to your profile</p>
+    </a>
+
+    <!-- Manage Bookings -->
+    <a href="{% url 'artist_bookings' %}"
+       class="bg-white/10 backdrop-blur-xl border border-white/20 rounded-3xl p-10 text-center hover:-translate-y-2 transition shadow-xl">
+      <div class="text-5xl mb-4">📅</div>
+      <h4 class="text-xl font-bold mb-2">Manage Bookings</h4>
+      <p class="text-white/70">View upcoming & past events</p>
+    </a>
+
+    <!-- Profile -->
+    <a href="{% url 'artist_profile' %}"
+       class="bg-white/10 backdrop-blur-xl border border-white/20 rounded-3xl p-10 text-center hover:-translate-y-2 transition shadow-xl">
+      <div class="text-5xl mb-4">👤</div>
+      <h4 class="text-xl font-bold mb-2">Edit Profile</h4>
+      <p class="text-white/70">Update your artist information</p>
+    </a>
+
+  </div>
+
+</section>
+
+<!-- ================= FOOTER ================= -->
+<footer class="py-8 text-center text-white/60 mt-24">
+  © 2025 Artist Hub • Artist Dashboard
+</footer>
+
+</body>
+</html>

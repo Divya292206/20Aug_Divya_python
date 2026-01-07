@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Media Gallery | Artist Hub</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+</head>
+
+<body class="bg-[#0F0C29] text-white min-h-screen">
+
+<!-- NAV -->
+<nav class="flex justify-between items-center px-12 py-5 bg-[#0B1220] border-b border-white/10">
+  <h1 class="text-2xl font-bold text-amber-400">📁 Media Gallery</h1>
+  <a href="{% url 'artist_dashboard' %}" class="text-white/70 hover:text-amber-400">
+    ← Dashboard
+  </a>
+</nav>
+
+<section class="max-w-7xl mx-auto px-12 py-16">
+
+  <!-- UPLOAD -->
+  <form method="POST" enctype="multipart/form-data"
+        class="mb-12 bg-white/10 border border-white/20 rounded-3xl p-8">
+    {% csrf_token %}
+
+    <h2 class="text-2xl font-bold mb-4 text-pink-400">Upload Media</h2>
+
+    <input type="file" name="media" required
+           class="block w-full text-white mb-6">
+
+    <button type="submit"
+            class="px-8 py-3 rounded-full bg-gradient-to-r from-pink-500 to-orange-400 font-bold">
+      Upload
+    </button>
+  </form>
+
+  <!-- GALLERY -->
+  <div class="grid md:grid-cols-3 gap-8">
+
+    {% for media in media_files %}
+  <div class="relative bg-white/10 border border-white/20 rounded-2xl p-4">
+
+    {% if media.image %}
+      <img src="{{ media.image.url }}"
+           class="rounded-xl h-56 w-full object-cover">
+    {% elif media.video %}
+      <video controls class="rounded-xl h-56 w-full object-cover">
+        <source src="{{ media.video.url }}">
+      </video>
+    {% endif %}
+
+    <a href="{% url 'delete_media' media.id %}"
+       class="absolute top-3 right-3 px-3 py-1 text-sm bg-red-500 rounded-full">
+      ✖
+    </a>
+
+  </div>
+{% empty %}
+  <p class="text-white/60">No media uploaded yet.</p>
+{% endfor %}
+
+
+  </div>
+
+</section>
+
+</body>
+</html>

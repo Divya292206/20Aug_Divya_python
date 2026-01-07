@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Contact Messages | Admin</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+</head>
+
+<body class="min-h-screen bg-[#080614] text-white p-6">
+
+  <!-- Glow Background -->
+  <div class="absolute w-[500px] h-[500px] bg-pink-500 blur-[250px] opacity-20"></div>
+
+  <div class="relative max-w-7xl mx-auto">
+
+    <!-- Header -->
+    <div class="flex justify-between items-center mb-8">
+      <h1 class="text-3xl font-extrabold">
+        ✉ Contact Messages
+      </h1>
+      <a href="{% url 'admin_dashboard' %}"
+         class="px-5 py-2 rounded-full bg-white/10 border border-white/20 hover:bg-white/20 transition">
+        ← Back to Dashboard
+      </a>
+    </div>
+
+    <!-- Table Card -->
+    <div class="bg-white/10 backdrop-blur-xl border border-white/20 rounded-3xl shadow-xl overflow-hidden">
+      <div class="overflow-x-auto">
+        <table class="w-full text-left">
+          <thead class="bg-black/40">
+            <tr>
+              <th class="px-6 py-4">ID</th>
+              <th class="px-6 py-4">Name</th>
+              <th class="px-6 py-4">Email</th>
+              <th class="px-6 py-4">Message</th>
+              <th class="px-6 py-4">Created At</th>
+              <th class="px-6 py-4 text-center">Action</th>
+            </tr>
+          </thead>
+
+          <tbody>
+          {% for contact in contacts %}
+            <tr class="border-b border-white/10 hover:bg-white/5 transition">
+              <td class="px-6 py-4 font-semibold">{{ contact.id }}</td>
+              <td class="px-6 py-4">{{ contact.name }}</td>
+              <td class="px-6 py-4 text-white/70">{{ contact.email }}</td>
+              <td class="px-6 py-4">{{ contact.message|default:"—" }}</td>
+              <td class="px-6 py-4">{{ contact.created_at|date:"d M Y, H:i" }}</td>
+
+              <!-- DELETE ACTION -->
+              <td class="px-6 py-4 text-center">
+                <a href="{% url 'delete_contact' contact.id %}"
+                   class="px-4 py-2 rounded-full bg-red-500 hover:bg-red-600 font-semibold transition">
+                  Delete
+                </a>
+              </td>
+            </tr>
+          {% empty %}
+            <tr>
+              <td colspan="6" class="px-6 py-10 text-center text-white/60">
+                🚫 No messages found
+              </td>
+            </tr>
+          {% endfor %}
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+  </div>
+
+</body>
+</html>

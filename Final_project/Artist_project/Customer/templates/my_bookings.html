@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>My Bookings | Artist Hub</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-[#0F0C29] text-white min-h-screen">
+
+<section class="pt-20 px-12 max-w-6xl mx-auto">
+
+  <!-- Back link -->
+  <div class="mb-6">
+    <a href="/main_dashboard/" class="text-amber-400 hover:text-amber-500 font-semibold">
+      ← Back to Dashboard
+    </a>
+  </div>
+
+  <h2 class="text-4xl font-bold mb-8 text-pink-400">🎫 My Bookings</h2>
+
+  <div class="space-y-6">
+    {% if bookings %}
+      {% for booking in bookings %}
+        <div class="bg-white/10 p-6 rounded-2xl border border-white/20">
+          <h3 class="text-2xl font-bold text-amber-400">{{ booking.artist.full_name }}</h3>
+          <p class="text-white/70">Category: {{ booking.artist.category }}</p>
+          <p class="text-white/70">Event Date: {{ booking.event_date }}</p>
+          <p class="text-white/70">City: {{ booking.city }}</p>
+          <p class="text-white/70">Notes: {{ booking.message|default:"-" }}</p>
+          <p class="text-green-400">Status: {{ booking.status }}</p>
+        </div>
+      {% endfor %}
+    {% else %}
+      <p class="text-white/60 text-center">You have no bookings yet.</p>
+    {% endif %}
+  </div>
+
+</section>
+
+</body>
+</html>

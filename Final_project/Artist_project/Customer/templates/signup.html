@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Register | Artist Hub</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+</head>
+
+<body class="min-h-screen flex items-center justify-center bg-[#080614] text-white">
+
+  <!-- Glow -->
+  <div class="absolute w-[450px] h-[450px] bg-orange-400 blur-[200px] opacity-30"></div>
+
+  <div class="relative bg-white/10 backdrop-blur-xl border border-white/20 rounded-3xl p-10 w-full max-w-lg shadow-2xl">
+
+    <!-- Message -->
+    {% if msg %}
+      <h3 class="text-center text-red-400 text-xl font-bold mb-4">{{ msg }}</h3>
+    {% endif %}
+
+    <h2 class="text-4xl font-extrabold text-center mb-8">
+      Join Artist Hub 🎤
+    </h2>
+
+    <form method="post">
+      {% csrf_token %}
+
+      <!-- Common Fields -->
+      <div class="grid md:grid-cols-2 gap-4 mb-4">
+        <input type="text" name="full_name" placeholder="Full Name" required
+               class="px-4 py-3 rounded-lg bg-black/40 border border-white/20 focus:outline-none">
+
+        <input type="email" name="email" placeholder="Email" required
+               class="px-4 py-3 rounded-lg bg-black/40 border border-white/20 focus:outline-none">
+      </div>
+
+      <div class="grid md:grid-cols-2 gap-4 mb-4">
+        <input type="tel" name="mobile" placeholder="Phone" pattern="[0-9]{10}" required
+               class="px-4 py-3 rounded-lg bg-black/40 border border-white/20 focus:outline-none">
+
+        <input type="password" name="password" placeholder="Password" required
+               class="px-4 py-3 rounded-lg bg-black/40 border border-white/20 focus:outline-none">
+      </div>
+
+      <!-- Role Selection -->
+      <div class="mb-6">
+        <label class="block mb-3 text-white/70">Register As</label>
+        <div class="flex gap-6">
+          <label class="flex items-center gap-2 cursor-pointer">
+            <input type="radio" name="user_type" value="artist" required>
+            🎤 Artist
+          </label>
+          <label class="flex items-center gap-2 cursor-pointer">
+            <input type="radio" name="user_type" value="customer" required>
+            🎫 Customer
+          </label>
+        </div>
+      </div>
+
+      <!-- ARTIST ONLY FIELDS -->
+      <div id="artist_fields" class="hidden">
+
+        <div class="mb-4">
+          <input type="text" name="category" placeholder="Artist Category (Singer, Dancer, etc.)"
+            class="w-full px-4 py-3 rounded-lg bg-black/40 border border-white/20 focus:outline-none">
+        </div>
+
+        <div class="mb-4">
+          <input type="number" name="experience" placeholder="Experience (Years)"
+            class="w-full px-4 py-3 rounded-lg bg-black/40 border border-white/20 focus:outline-none">
+        </div>
+
+        <div class="mb-4">
+          <textarea name="bio" placeholder="Short Bio"
+            class="w-full px-4 py-3 rounded-lg bg-black/40 border border-white/20 focus:outline-none"></textarea>
+        </div>
+
+      </div>
+
+      <!-- Submit -->
+      <button
+        class="w-full py-3 rounded-full bg-gradient-to-r from-pink-500 to-orange-400 font-bold hover:scale-105 transition">
+        Create Account
+      </button>
+    </form>
+
+    <p class="text-center text-white/60 mt-6">
+      Already have an account?
+      <a href="/login/" class="text-orange-400 font-semibold">Login</a>
+    </p>
+
+  </div>
+
+  <!-- JS: Show/Hide Artist Fields -->
+  <script>
+    const artistFields = document.getElementById("artist_fields");
+    const radios = document.querySelectorAll('input[name="user_type"]');
+
+    radios.forEach(radio => {
+      radio.addEventListener('change', () => {
+        if (radio.value === 'artist') {
+          artistFields.classList.remove('hidden');
+        } else {
+          artistFields.classList.add('hidden');
+        }
+      });
+    });
+  </script>
+
+</body>
+</html>

@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Search Artists | Artist Hub</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+</head>
+
+<body class="bg-[#111827] text-gray-100 min-h-screen">
+
+<!-- ================= NAVBAR ================= -->
+<nav class="flex justify-between items-center px-12 py-6 backdrop-blur-md bg-white/5 border-b border-white/10">
+    <h1 class="text-3xl font-extrabold tracking-wide text-pink-400">
+        🎵 Artist Hub
+    </h1>
+    <div class="space-x-6 text-sm font-semibold">
+    <a href="/main_dashboard/" class="text-amber-400">Dashboard</a>
+    <a href="#" class="hover:text-amber-400">Search Artists</a>
+    <a href="/about/" class="hover:text-amber-400">About Us</a>
+    <a href="/contact/" class="hover:text-amber-400">Contact Us</a>
+    {% if user %}
+    <a href="/my_bookings/" class="hover:text-amber-400">My Bookings</a>
+    <a href="/logout/" class="font-semibold">Logout</a>
+    {% endif %}
+  </div>
+ 
+</nav>
+
+<!-- ================= SEARCH SECTION ================= -->
+<section class="px-12 pt-20 max-w-7xl mx-auto">
+
+  <h2 class="text-3xl font-bold mb-10 text-amber-400">
+    🔍 Search Artists
+  </h2>
+
+  <!-- ================= FILTER FORM ================= -->
+  <form method="get" class="grid md:grid-cols-3 gap-6 mb-14">
+
+    <select name="category"
+            class="bg-[#0B1220] border border-white/10 rounded-xl px-4 py-3 focus:outline-none">
+      <option value="">All Categories</option>
+      <option value="Singer">Singer</option>
+      <option value="Dancer">Dancer</option>
+      <option value="DJ">DJ</option>
+      <option value="Musician">Musician</option>
+    </select>
+
+    <button type="submit"
+            class="bg-amber-400 hover:bg-amber-500 text-black font-bold rounded-xl px-6 py-3">
+      Search
+    </button>
+  </form>
+
+  <!-- ================= ARTIST CARDS ================= -->
+  <div class="grid md:grid-cols-3 gap-10">
+
+    {% for artist in artists %}
+    <div class="bg-[#0B1220] border border-white/10 rounded-2xl p-6 hover:-translate-y-1 transition">
+
+      <h3 class="text-xl font-bold text-amber-400">
+        {{ artist.full_name }}
+      </h3>
+
+      <p class="text-gray-400 text-sm mt-1">
+        Category: {{ artist.category }}
+      </p>
+
+      <p class="text-gray-400 text-sm">
+        Experience: {{ artist.experience }} years
+      </p>
+
+      <p class="text-yellow-400 mt-3">
+        ★★★★☆
+      </p>
+
+      <!-- ================= BOOK BUTTON ================= -->
+     {% if request.session.user_id %}
+  <a href="{% url 'book_artist' artist.id %}"
+     class="inline-block mt-5 text-amber-400 font-semibold hover:underline">
+    Book Now →
+  </a>
+{% else %}
+  <a href="{% url 'login' %}"
+     class="inline-block mt-5 text-gray-400 font-semibold hover:underline">
+    Login to Book →
+  </a>
+{% endif %}
+
+
+
+    </div>
+
+    {% empty %}
+      <p class="text-gray-400 col-span-3 text-center">
+        🚫 No artists found
+      </p>
+    {% endfor %}
+
+  </div>
+
+</section>
+
+<!-- ================= FOOTER ================= -->
+<footer class="py-10 text-center text-white/50 mt-20">
+  © 2025 Artist Hub • All Rights Reserved
+</footer>
+
+</body>
+</html>

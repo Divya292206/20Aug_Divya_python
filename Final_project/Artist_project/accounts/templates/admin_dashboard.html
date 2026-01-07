@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Admin Dashboard | Artist Hub</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+</head>
+
+<body class="bg-[#080614] text-white min-h-screen">
+
+<div class="flex min-h-screen">
+
+  <!-- ================= SIDEBAR ================= -->
+  <aside class="w-64 bg-[#0F0C29] text-white hidden md:block">
+    <div class="p-6 text-2xl font-bold border-b border-white/20">
+      Artist Hub
+    </div>
+    <nav class="p-4 space-y-3">
+      <a href="#" class="block px-4 py-2 rounded bg-white/10">Dashboard</a>
+      <a href="{% url 'admin_artists_list' %}" class="block px-4 py-2 rounded hover:bg-white/20">Artists</a>
+      <a href="{% url 'admin_customers_list' %}" class="block px-4 py-2 rounded hover:bg-white/20">Customers</a>
+      <a href="{% url 'admin_booking' %}" class="block px-4 py-2 rounded hover:bg-white/20">Bookings</a>
+      <a href="{% url 'admin_contact' %}" class="block px-4 py-2 rounded hover:bg-white/20">Contact</a>
+      <a href="{% url 'userlogout' %}" class="block px-4 py-2 rounded hover:bg-red-500">Logout</a>
+    </nav>
+  </aside>
+
+  <!-- ================= MAIN CONTENT ================= -->
+  <main class="flex-1 p-6 relative z-10">
+
+    <!-- Glow Background -->
+    <div class="absolute w-[600px] h-[600px] bg-purple-500 blur-[250px] opacity-20 -top-32 -right-32"></div>
+
+    <!-- TOP BAR -->
+    <header class="flex justify-between items-center mb-6">
+      <h1 class="text-3xl font-extrabold">Admin Dashboard</h1>
+      <span class="text-white/70">Welcome, Admin</span>
+    </header>
+
+   
+
+    <!-- ================= ARTIST APPROVAL ================= -->
+    <section class="mb-6">
+      <div class="bg-white/10 backdrop-blur-xl border border-white/20 rounded-3xl shadow-xl overflow-hidden">
+        <div class="p-4 border-b border-white/20 font-semibold">
+          Pending Artist Approvals
+        </div>
+        <div class="overflow-x-auto">
+          <table class="w-full text-left">
+            <thead class="bg-white/10">
+              <tr>
+                <th class="px-6 py-4">ID</th>
+                <th class="px-6 py-4">Full Name</th>
+                <th class="px-6 py-4">Email</th>
+                <th class="px-6 py-4">Category</th>
+                <th class="px-6 py-4">Experience</th>
+                <th class="px-6 py-4 text-center">Actions</th>
+              </tr>
+            </thead>
+            <tbody>
+              {% for artist in pending_artists %}
+              <tr class="border-b border-white/10 hover:bg-white/5 transition">
+                <td class="px-6 py-4 font-semibold">{{ artist.user.id }}</td>
+                <td class="px-6 py-4 font-semibold">{{ artist.user.full_name }}</td>
+                <td class="px-6 py-4">{{ artist.user.email }}</td>
+                <td class="px-6 py-4">{{ artist.category }}</td>
+                <td class="px-6 py-4">{{ artist.experience }}</td>
+                <td class="px-6 py-4 text-center flex justify-center gap-2">
+                  <a href="{% url 'approve_artist' artist.id %}" class="px-4 py-2 rounded-full bg-green-500 hover:bg-green-600 font-semibold transition">Approve</a>
+                  <a href="{% url 'reject_artist' artist.id %}" class="px-4 py-2 rounded-full bg-red-500 hover:bg-red-600 font-semibold transition">Reject</a>
+                </td>
+              </tr>
+              {% empty %}
+              <tr>
+                <td colspan="6" class="px-6 py-10 text-center text-white/50">
+                  🚫 No pending artist approvals
+                </td>
+              </tr>
+              {% endfor %}
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+
+   
+
+   
+
+  </main>
+</div>
+</body>
+</html>

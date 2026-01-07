@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>My Bookings | Artist Hub</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+</head>
+
+<body class="min-h-screen bg-gradient-to-br from-[#0F0C29] via-[#302B63] to-[#24243E] text-white">
+
+<!-- ================= NAVBAR ================= -->
+<nav class="fixed top-0 w-full z-50 backdrop-blur-lg bg-white/5 border-b border-white/10">
+  <div class="max-w-7xl mx-auto px-6 py-5 flex justify-between items-center">
+    <h1 class="text-3xl font-extrabold text-pink-400 tracking-wide">
+      🎵 Artist Hub
+    </h1>
+
+    <a href="{% url 'artist_dashboard' %}"
+       class="text-white/70 hover:text-pink-400 transition font-medium">
+      Dashboard
+    </a>
+  </div>
+</nav>
+
+<!-- ================= CONTENT ================= -->
+<section class="pt-32 pb-20 px-6 max-w-6xl mx-auto">
+
+  <!-- Page Title -->
+  <div class="mb-10">
+    <h2 class="text-4xl font-bold text-orange-400">
+      📅 My Event Bookings
+    </h2>
+    <p class="text-white/60 mt-2">
+      View all your upcoming and past event bookings
+    </p>
+  </div>
+
+  <!-- Booking Table Card -->
+  <div class="bg-white/10 backdrop-blur-xl border border-white/20 rounded-3xl shadow-2xl overflow-hidden">
+
+    <table class="min-w-full text-left">
+      <thead class="bg-white/10 text-white/80">
+        <tr>
+          <th class="px-6 py-4 font-semibold">Event Date</th>
+          <th class="px-6 py-4 font-semibold">Location</th>
+          <th class="px-6 py-4 font-semibold">Message</th>
+        </tr>
+      </thead>
+
+      <tbody class="divide-y divide-white/10">
+
+        {% for booking in bookings %}
+        <tr class="hover:bg-white/5 transition">
+
+          <!-- Event Date -->
+          <td class="px-6 py-4 text-white/90">
+            {{ booking.event_date }}
+          </td>
+
+          <!-- Location -->
+          <td class="px-6 py-4 text-white/70">
+            {{ booking.city }}
+          </td>
+
+          <!-- Message -->
+          <td class="px-6 py-4 text-white/60">
+            {{ booking.message|default:"No message provided" }}
+          </td>
+
+        </tr>
+        {% empty %}
+        <tr>
+          <td colspan="3" class="px-6 py-12 text-center text-white/60">
+            No bookings found yet.
+          </td>
+        </tr>
+        {% endfor %}
+
+      </tbody>
+    </table>
+
+  </div>
+
+</section>
+
+<!-- ================= FOOTER ================= -->
+<footer class="border-t border-white/10 py-6 text-center text-white/50 text-sm">
+  © 2025 Artist Hub • All rights reserved
+</footer>
+
+</body>
+</html>

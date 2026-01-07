@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Artist Approvals | Admin</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+</head>
+
+<body class="min-h-screen bg-[#080614] text-white p-6">
+
+  <!-- Glow Background -->
+  <div class="absolute w-[500px] h-[500px] bg-pink-500 blur-[250px] opacity-20"></div>
+
+  <!-- Container -->
+  <div class="relative max-w-7xl mx-auto">
+
+    <!-- Header -->
+    <div class="flex justify-between items-center mb-8">
+      <h1 class="text-3xl font-extrabold">
+        🎤 Artist Approvals
+      </h1>
+
+      <a href="{% url 'admin_dashboard' %}"
+         class="px-5 py-2 rounded-full bg-white/10 border border-white/20 hover:bg-white/20 transition">
+        ← Back to Dashboard
+      </a>
+    </div>
+
+    <!-- Table Card -->
+    <div class="bg-white/10 backdrop-blur-xl border border-white/20 rounded-3xl shadow-xl overflow-hidden">
+
+      <div class="overflow-x-auto">
+        <table class="w-full text-left">
+          <thead class="bg-black/40">
+            <tr>
+              <th class="px-6 py-4">ID</th>
+              <th class="px-6 py-4">Full Name</th>
+              <th class="px-6 py-4">Email</th>
+              <th class="px-6 py-4">Category</th>
+              <th class="px-6 py-4">Experience</th>
+              <th class="px-6 py-4">Status</th>
+              <th class="px-6 py-4 text-center">Action</th>
+            </tr>
+          </thead>
+
+          <tbody>
+
+          {% for artist in artists %}
+            <tr class="border-b border-white/10 hover:bg-white/5 transition">
+
+              <td class="px-6 py-4 font-semibold">
+                {{ artist.user.id }}
+              </td>
+
+              <td class="px-6 py-4 font-semibold">
+                {{ artist.user.full_name }}
+              </td>
+
+              <td class="px-6 py-4 text-white/70">
+                {{ artist.user.email }}
+              </td>
+
+              <td class="px-6 py-4">
+                {{ artist.category|default:"—" }}
+              </td>
+
+              <td class="px-6 py-4">
+                {{ artist.experience|default:"—" }}
+              </td>
+
+              <!-- STATUS -->
+              <td class="px-6 py-4">
+                {% if artist.status == 'PENDING' %}
+                  <span class="px-3 py-1 rounded-full bg-yellow-500/20 text-yellow-400 text-sm">
+                    Pending
+                  </span>
+                {% elif artist.status == 'APPROVED' %}
+                  <span class="px-3 py-1 rounded-full bg-green-500/20 text-green-400 text-sm">
+                    Approved
+                  </span>
+                {% elif artist.status == 'REJECTED' %}
+                  <span class="px-3 py-1 rounded-full bg-red-500/20 text-red-400 text-sm">
+                    Rejected
+                  </span>
+                {% endif %}
+              </td>
+
+              <!-- ACTION -->
+              <td class="px-6 py-4 text-center">
+                <div class="flex justify-center gap-3">
+
+                  {% if artist.status == 'PENDING' %}
+                    <a href="{% url 'approve_artist' artist.id %}"
+                       class="px-4 py-2 rounded-full bg-green-500 hover:bg-green-600 font-semibold transition">
+                      Approve
+                    </a>
+
+                    <a href="{% url 'reject_artist' artist.id %}"
+                       class="px-4 py-2 rounded-full bg-red-500 hover:bg-red-600 font-semibold transition">
+                      Reject
+                    </a>
+
+                  {% elif artist.status == 'APPROVED' %}
+                    <span class="text-green-400 font-semibold">
+                      ✔ Approved
+                    </span>
+
+                  {% elif artist.status == 'REJECTED' %}
+                    <span class="text-red-400 font-semibold">
+                      ✖ Rejected
+                    </span>
+                  {% endif %}
+
+                </div>
+              </td>
+
+            </tr>
+
+          {% empty %}
+            <tr>
+              <td colspan="7" class="px-6 py-10 text-center text-white/60">
+                🚫 No artists found
+              </td>
+            </tr>
+          {% endfor %}
+
+          </tbody>
+        </table>
+      </div>
+
+    </div>
+
+  </div>
+
+</body>
+</html>
